@@ -10,9 +10,11 @@ permissions:
   pages: write
   id-token: write
 
+# Không hủy giữa chừng: hủy run sẽ để lại deployment "in progress" bị treo,
+# khiến các lần deploy sau lỗi "due to in progress deployment".
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
