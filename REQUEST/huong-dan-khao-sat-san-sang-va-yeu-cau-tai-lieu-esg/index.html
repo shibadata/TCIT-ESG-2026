@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hướng dẫn thực hiện khảo sát hiện trạng về mức độ sẵn sàng &amp; yêu cầu tài liệu</title>
+
+<!-- ==========================================================================
+     BẢNG ĐIỀU KHIỂN STYLE - sửa ở đây là đổi toàn trang
+     ==========================================================================
+     Màu lấy từ file request TCIT_Documentation_Readiness_Survey_v1.3_Dot1A.
+     Quy ước màu: XANH BIỂN = việc của TCIT · XANH LÁ = việc của Baker Tilly A&C
+     ========================================================================== -->
+<style>
+:root{
+  /* ---- MÀU: xanh hải quân (TCIT) ---- */
+  --navy-900:#17365D;      /* đậm nhất, tiêu đề lớn */
+  --navy-800:#1F3864;
+  --navy-700:#1F4E79;      /* header tab03 trong file Excel */
+  --navy-600:#2E5C8A;      /* header tab đợt 1A trong file Excel */
+  --navy-300:#C1E4F5;
+  --navy-100:#DDEBF7;
+  --navy-050:#EAF0F6;
+  --navy-025:#F7F9FC;
+
+  /* ---- MÀU: xanh lá (Baker Tilly A&C) ---- */
+  --green-900:#0B4A44;
+  --green-700:#0F766E;     /* xanh lá đậm trong file Excel */
+  --green-500:#158E84;
+  --green-200:#B7E0D9;
+  --green-100:#D9F2D0;
+  --green-050:#EAF7F5;
+
+  /* ---- MÀU: vàng nghệ (accent, nhấn mạnh) ---- */
+  --turmeric-700:#8A6100;
+  --turmeric-500:#C98A00;
+  --turmeric-400:#E0A72A;   /* dùng trên nền sáng */
+  --turmeric-300:#F0BE4D;   /* dùng trên nền navy - sáng hơn cho dễ đọc */
+  --turmeric-200:#F5DFA8;
+  --turmeric-100:#FCF3DC;
+
+  /* ---- MÀU CHỮ TRÊN NỀN XANH HẢI QUÂN ----
+     Tất cả đã kiểm tỷ lệ tương phản trên nền --navy-900, đều đạt chuẩn
+     WCAG AA (>= 4.5). Bốn mức từ rõ nhất tới mờ nhất. Nếu sửa cho tối đi
+     thì kiểm lại tương phản, đừng dưới 4.5. ---- */
+  --on-navy-1:#F2F6FA;    /* rõ nhất - tên thư mục, chữ quan trọng   11.2 */
+  --on-navy-2:#E3ECF5;    /* thường  - chữ thân trong cây            10.2 */
+  --on-navy-3:#C3D4E4;    /* phụ     - mã thư mục, chữ nhạt           8.1 */
+  --on-navy-4:#B9CBDC;    /* mờ      - tên file, ghi chú              7.1 */
+  --on-navy-5:#9DB2C6;    /* mờ nhất - nhánh cây, đường dẫn           5.6 */
+
+  /* ---- MÀU: trung tính ---- */
+  --ink:#1A1F26;           /* chữ chính                    16.6 */
+  --ink-soft:#4A5563;      /* chữ phụ                       7.6 */
+  --ink-faint:#606B78;     /* chữ mờ - đã tối lại cho đủ tương phản  5.5 */
+  --line:#DCE3EA;          /* đường kẻ */
+  --line-soft:#EDF1F5;
+  --paper:#FFFFFF;
+  --paper-alt:#F7F9FC;
+  --paper-sink:#F0F4F8;
+
+  /* ---- MÀU trạng thái (6 giá trị của cột Tình trạng) ---- */
+  --st-chuagui-bg:#FDECEC;    --st-chuagui-fg:#9B2C2C;   --st-chuagui-bd:#F0B9B9;
+  --st-dangcb-bg:#FCF3DC;     --st-dangcb-fg:#8A6100;    --st-dangcb-bd:#F0DCA8;
+  --st-dacc-bg:#E3F5E8;       --st-dacc-fg:#1E6B37;      --st-dacc-bd:#B4E0C2;
+  --st-khongco-bg:#EEF2F6;    --st-khongco-fg:#4A5563;   --st-khongco-bd:#D3DCE5;
+  --st-khongad-bg:#F2F0F7;    --st-khongad-fg:#5B4B8A;   --st-khongad-bd:#D6CFE8;
+  --st-canlamro-bg:#EAF0F6;   --st-canlamro-fg:#1F4E79;  --st-canlamro-bd:#BCD2E5;
+
+  /* ---- MÀU điểm 1-5 ---- */
+  --sc1:#C0392B; --sc2:#D97706; --sc3:#C98A00; --sc4:#5B9B47; --sc5:#0F766E;
+
+  /* ---- FONT ---- */
+  --font-text:'Candara','Trebuchet MS','Segoe UI',system-ui,sans-serif;
+  --font-mono:'Consolas','Cascadia Mono','Courier New',monospace;
+
+  /* ---- CỠ CHỮ (đã tăng 2 bậc so với bản đầu, nhỏ nhất 14px) ---- */
+  --fs-micro:14px;        /* nhãn nhỏ, chú thích - nhỏ nhất toàn trang */
+  --fs-small:15px;        /* text phụ trong bảng */
+  --fs-body:16px;         /* body chính */
+  --fs-body-lg:17px;      /* body ở phần mở đầu */
+  --fs-lead:19px;         /* câu dẫn */
+  --fs-h4:18px;
+  --fs-h3:21px;
+  --fs-h2:25px;
+  --fs-h1:34px;
+  --fs-mono:15px;         /* code trong câu, thẻ mono-tag */
+  --fs-mono-lg:16px;      /* cây thư mục */
+  --fs-th:14px;           /* header bảng (Consolas) */
+  --fs-th-xl:14px;        /* header bảng mô phỏng Excel */
+
+  /* ---- KHOẢNG CÁCH ---- */
+  --sp-1:4px;  --sp-2:8px;  --sp-3:12px; --sp-4:16px;
+  --sp-5:24px; --sp-6:32px; --sp-7:48px; --sp-8:64px;
+
+  --radius:8px;
+  --radius-sm:5px;
+  --radius-lg:12px;
+
+  --shadow-sm:0 1px 3px rgba(23,54,93,.07);
+  --shadow-md:0 3px 12px rgba(23,54,93,.10);
+
+  /* ---- BỐ CỤC ---- */
+  --nav-w:262px;          /* chiều rộng thanh điều hướng dọc bên trái */
+  --nav-w-min:44px;       /* chiều rộng khi đã gập - chỉ còn nút mở lại */
+  --content-max:1000px;
+}
+
+/* ===== RESET ===== */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--paper-sink); color:var(--ink);
+  font-family:var(--font-text); font-size:var(--fs-body); line-height:1.54;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{line-height:1.28; margin:0; font-weight:700; color:var(--navy-900)}
+p{margin:0 0 var(--sp-4)}
+code,kbd,.mono{font-family:var(--font-mono)}
+a{color:var(--navy-700)}
+
+/* ===== KHUNG TRANG ===== */
+.layout{display:flex; min-height:100vh; align-items:flex-start}
+
+/* ===== THANH ĐIỀU HƯỚNG DỌC BÊN TRÁI ===== */
+.nav{
+  width:var(--nav-w); flex:0 0 var(--nav-w);
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  background:var(--navy-900); color:#fff; padding:var(--sp-4) 0;
+  transition:width .18s ease, flex-basis .18s ease;
+}
+@media (prefers-reduced-motion:reduce){.nav{transition:none}}
+.nav__brand{padding:0 var(--sp-5) var(--sp-3); border-bottom:1px solid rgba(255,255,255,.20)}
+.nav__brand-title{
+  font-size:var(--fs-small); font-weight:700; letter-spacing:.2px;
+  line-height:1.3; color:var(--on-navy-1);
+}
+.nav__brand-sub{
+  font-family:var(--font-mono); font-size:var(--fs-micro);
+  color:var(--turmeric-300); margin-top:5px; letter-spacing:.4px;
+}
+.nav__list{list-style:none; margin:var(--sp-2) 0 0; padding:0}
+.nav__link{
+  display:flex; align-items:baseline; gap:var(--sp-3);
+  padding:6px var(--sp-5); color:var(--on-navy-2);
+  text-decoration:none; font-size:var(--fs-body); line-height:1.3;
+  border-left:3px solid transparent; transition:.16s;
+}
+.nav__link:hover{background:rgba(255,255,255,.10); color:#fff}
+.nav__link.is-active{
+  background:rgba(240,190,77,.16); color:#fff;
+  border-left-color:var(--turmeric-300); font-weight:600;
+}
+.nav__num{
+  font-family:var(--font-mono); font-size:var(--fs-micro);
+  color:var(--turmeric-300); flex:0 0 auto; min-width:20px;
+}
+/* Mục con - thụt vào, chữ nhỏ hơn một bậc */
+.nav__link--sub{
+  padding-top:3px; padding-bottom:3px; padding-left:var(--sp-6);
+  font-size:var(--fs-small); color:var(--on-navy-3);
+}
+.nav__link--sub .nav__num{min-width:26px; color:var(--on-navy-4)}
+/* Tách nhóm: mục lớn đứng ngay sau một mục con thì hở thêm một chút */
+.nav__list li:has(.nav__link--sub) + li:not(:has(.nav__link--sub)){margin-top:5px}
+.nav__link--sub.is-active .nav__num{color:var(--turmeric-300)}
+/* Tên tab Excel ghi kèm mục lớn */
+.nav__tab{
+  display:block; font-family:var(--font-mono); font-size:var(--fs-micro);
+  color:var(--on-navy-4); margin-top:1px; letter-spacing:.2px;
+}
+.nav__link.is-active .nav__tab{color:var(--turmeric-300)}
+.nav__foot{
+  margin-top:var(--sp-3); padding:var(--sp-3) var(--sp-5) 0;
+  border-top:1px solid rgba(255,255,255,.20);
+  font-size:var(--fs-micro); color:var(--on-navy-3); line-height:1.45;
+}
+
+/* ===== NÚT ẨN/HIỆN MỤC LỤC ===== */
+.nav__toggle{
+  display:flex; align-items:center; gap:var(--sp-2);
+  width:calc(100% - var(--sp-5)); margin:var(--sp-3) 0 0 var(--sp-4);
+  padding:5px var(--sp-3); background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.18); border-radius:var(--radius);
+  color:var(--on-navy-3); font-family:var(--font-mono);
+  font-size:var(--fs-micro); letter-spacing:.3px;
+  cursor:pointer; transition:.16s;
+}
+.nav__toggle:hover{background:rgba(255,255,255,.14); color:#fff}
+.nav__toggle:focus-visible{outline:2px solid var(--turmeric-300); outline-offset:2px}
+.nav__toggle-ico{font-weight:700; line-height:1; flex:0 0 auto}
+
+/* --- Trạng thái đã gập --- */
+.layout.is-collapsed .nav{
+  width:var(--nav-w-min); flex:0 0 var(--nav-w-min);
+  padding-left:0; padding-right:0; overflow:visible;
+}
+.layout.is-collapsed .nav__brand,
+.layout.is-collapsed .nav__list,
+.layout.is-collapsed .nav__foot,
+.layout.is-collapsed .nav__toggle-txt{display:none}
+.layout.is-collapsed .nav__toggle{
+  width:calc(var(--nav-w-min) - 12px); margin:0 6px;
+  justify-content:center; padding:8px 0;
+}
+.layout.is-collapsed .nav__toggle-ico{transform:rotate(180deg)}
+
+/* ===== VÙNG NỘI DUNG ===== */
+.main{flex:1 1 auto; min-width:0; padding:var(--sp-5) var(--sp-6) var(--sp-7)}
+.wrap{max-width:var(--content-max); margin:0 auto}
+
+.page-head{margin-bottom:var(--sp-5)}
+.page-head__eyebrow{
+  font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:1.1px;
+  text-transform:uppercase; color:var(--green-700); margin-bottom:var(--sp-3);
+}
+.page-head h1{font-size:var(--fs-h1); letter-spacing:-.3px; max-width:26ch}
+.page-head__lead{
+  font-size:var(--fs-lead); color:var(--ink-soft); margin-top:var(--sp-4);
+  max-width:70ch; line-height:1.55;
+}
+
+/* ===== SECTION ===== */
+.sec{
+  background:var(--paper); border:1px solid var(--line);
+  border-radius:var(--radius-lg); padding:var(--sp-5) var(--sp-6);
+  margin-bottom:var(--sp-5); box-shadow:var(--shadow-sm);
+  scroll-margin-top:var(--sp-4);
+}
+.sec__head{
+  display:flex; align-items:baseline; gap:var(--sp-3);
+  padding-bottom:var(--sp-3); margin-bottom:var(--sp-4);
+  border-bottom:2px solid var(--navy-100);
+}
+.sec__num{
+  font-family:var(--font-mono); font-size:var(--fs-body);
+  color:var(--turmeric-500); font-weight:700; flex:0 0 auto;
+}
+.sec__title{font-size:var(--fs-h2); letter-spacing:-.2px}
+.sec__intro{font-size:var(--fs-body-lg); color:var(--ink-soft); max-width:72ch}
+
+h3.sub{
+  font-size:var(--fs-h3); margin:var(--sp-5) 0 var(--sp-2);
+  padding-left:var(--sp-3); border-left:4px solid var(--navy-600);
+}
+h4.sub4{font-size:var(--fs-h4); margin:var(--sp-4) 0 var(--sp-2); color:var(--navy-700)}
+
+/* Mục con có số hiệu (2.1, 3.2...) */
+.subsec{margin:var(--sp-5) 0 0; scroll-margin-top:var(--sp-4)}
+.subsec:first-of-type{margin-top:var(--sp-4)}
+.subsec__head{display:flex; align-items:baseline; gap:var(--sp-3); margin-bottom:var(--sp-3)}
+.subsec__num{
+  font-family:var(--font-mono); font-size:var(--fs-h4);
+  color:var(--turmeric-500); font-weight:700; flex:0 0 auto;
+}
+.subsec__title{font-size:var(--fs-h3); letter-spacing:-.1px}
+
+/* Bảng mô tả cột của tab Excel */
+.cols{margin:var(--sp-4) 0}
+.cols__row{
+  display:grid; grid-template-columns:240px 1fr; gap:var(--sp-4);
+  padding:var(--sp-3) 0; border-top:1px solid var(--line-soft);
+  font-size:var(--fs-body); align-items:baseline;
+}
+.cols__row:first-child{border-top:none}
+.cols__k{
+  font-family:var(--font-mono); font-size:var(--fs-mono);
+  color:var(--navy-700); display:flex; align-items:baseline;
+  gap:var(--sp-2); flex-wrap:wrap;
+}
+.cols__v{color:var(--ink-soft)}
+.cols__v b{color:var(--ink)}
+.cols__note{
+  display:block; font-size:var(--fs-small); color:var(--ink-faint);
+  margin-top:3px;
+}
+/* ===== BA TRẠNG THÁI CỘT (danh sách A→T ở mục 3.2) ===== */
+/* Cột đã có sẵn - chữ chìm, chỉ tên cột, không giải thích */
+.cols--all .cols__row--ro{padding:5px 0}
+.cols--all .cols__row--ro .cols__k{color:var(--ink-faint); font-weight:400}
+/* Cột bắt buộc điền - vàng đậm */
+.cols__k--must{color:var(--turmeric-700); font-weight:700}
+/* Cột tùy chọn - xanh navy như hiện tại */
+.cols__k--opt{color:var(--navy-700); font-weight:700}
+/* Mã cột nhắc trong câu văn - cùng màu với danh sách bên dưới */
+.c-must,.c-opt{font-family:var(--font-mono); font-weight:700}
+.c-must{color:var(--turmeric-700)}
+.c-opt{color:var(--navy-700)}
+/* Chú giải ba trạng thái */
+.legend{
+  display:flex; flex-wrap:wrap; gap:var(--sp-4);
+  margin:var(--sp-3) 0 var(--sp-2); font-size:var(--fs-small); color:var(--ink-soft);
+}
+.legend__i{display:inline-flex; align-items:center; gap:6px}
+.legend__sw{width:11px; height:11px; border-radius:2px; flex:0 0 auto}
+.legend__sw--must{background:var(--turmeric-700)}
+.legend__sw--opt{background:var(--navy-700)}
+.legend__sw--ro{background:var(--ink-faint); opacity:.55}
+/* ===== NHÃN AI LÀM ===== */
+.who{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--font-mono); font-size:var(--fs-micro); font-weight:700;
+  padding:3px 9px; border-radius:20px; letter-spacing:.3px; white-space:nowrap;
+}
+.who--tcit{background:var(--navy-100); color:var(--navy-700); border:1px solid var(--navy-300)}
+.who--ac{background:var(--green-050); color:var(--green-700); border:1px solid var(--green-200)}
+.who--both{background:var(--turmeric-100); color:var(--turmeric-700); border:1px solid var(--turmeric-200)}
+.who::before{content:"●"; font-size:9px; line-height:1}
+
+/* ===== HỘP GHI CHÚ ===== */
+.note{
+  border-left:4px solid; border-radius:0 var(--radius) var(--radius) 0;
+  padding:var(--sp-3) var(--sp-5); margin:var(--sp-4) 0; font-size:var(--fs-body);
+}
+.note p:last-child{margin-bottom:0}
+.note__title{font-weight:700; margin-bottom:var(--sp-2); font-size:var(--fs-body)}
+.note--key{background:var(--turmeric-100); border-color:var(--turmeric-400)}
+.note--key .note__title{color:var(--turmeric-700)}
+.note--tcit{background:var(--navy-025); border-color:var(--navy-600)}
+.note--tcit .note__title{color:var(--navy-700)}
+.note--ac{background:var(--green-050); border-color:var(--green-700)}
+.note--ac .note__title{color:var(--green-900)}
+
+/* ===== BẢNG ===== */
+.tbl-wrap{overflow-x:auto; margin:var(--sp-4) 0; border-radius:var(--radius); border:1px solid var(--line)}
+table{border-collapse:collapse; width:100%; font-size:var(--fs-small); background:var(--paper)}
+th{
+  background:var(--navy-700); color:#fff; font-weight:700;
+  text-align:left; padding:12px var(--sp-4); font-size:var(--fs-th);
+  letter-spacing:.3px; white-space:nowrap;
+}
+th.th--ac{background:var(--green-700)}
+td{padding:10px var(--sp-4); border-top:1px solid var(--line-soft); vertical-align:top; line-height:1.5}
+tbody tr:nth-child(even){background:var(--paper-alt)}
+td.mono,th.mono{font-family:var(--font-mono); font-size:var(--fs-mono); white-space:nowrap}
+td.num{text-align:center; font-family:var(--font-mono); font-weight:700}
+
+/* ===== VIÊN TRẠNG THÁI ===== */
+.pill{
+  display:inline-block; font-size:var(--fs-micro); font-weight:700;
+  padding:3px 10px; border-radius:20px; border:1px solid; white-space:nowrap;
+}
+.pill--chuagui  {background:var(--st-chuagui-bg);  color:var(--st-chuagui-fg);  border-color:var(--st-chuagui-bd)}
+.pill--dangcb   {background:var(--st-dangcb-bg);   color:var(--st-dangcb-fg);   border-color:var(--st-dangcb-bd)}
+.pill--dacc     {background:var(--st-dacc-bg);     color:var(--st-dacc-fg);     border-color:var(--st-dacc-bd)}
+.pill--khongco  {background:var(--st-khongco-bg);  color:var(--st-khongco-fg);  border-color:var(--st-khongco-bd)}
+.pill--khongad  {background:var(--st-khongad-bg);  color:var(--st-khongad-fg);  border-color:var(--st-khongad-bd)}
+.pill--canlamro {background:var(--st-canlamro-bg); color:var(--st-canlamro-fg); border-color:var(--st-canlamro-bd)}
+
+/* ===== KHỐI GẬP (dùng cho phần lặp lại, vd thang điểm ở mục 3) ===== */
+.fold{
+  border:1px solid var(--line); border-radius:var(--radius);
+  margin:var(--sp-4) 0; background:var(--paper-alt); overflow:hidden;
+}
+.fold__head{
+  display:flex; align-items:center; gap:var(--sp-3); width:100%;
+  padding:var(--sp-4) var(--sp-5); background:none; border:none;
+  font-family:var(--font-text); font-size:var(--fs-body); font-weight:700;
+  color:var(--navy-700); cursor:pointer; text-align:left; transition:.15s;
+}
+.fold__head:hover{background:var(--navy-025)}
+.fold__caret{
+  color:var(--turmeric-500); font-size:var(--fs-small);
+  transition:transform .18s; flex:0 0 auto;
+}
+.fold__head[aria-expanded="true"] .fold__caret{transform:rotate(90deg)}
+.fold__hint{
+  margin-left:auto; font-weight:400; font-size:var(--fs-small);
+  color:var(--ink-faint);
+}
+.fold__body{display:none; padding:0 var(--sp-5) var(--sp-5); background:var(--paper)}
+.fold__body.is-open{display:block}
+.fold__body > :first-child{margin-top:var(--sp-4)}
+
+/* ===== THẺ ĐIỂM 1-5 ===== */
+.scores{display:grid; gap:var(--sp-2); margin:var(--sp-4) 0}
+/* Bản gọn - dùng ở chỗ nhắc lại, bớt màu mè */
+.scores--plain .score{border-color:var(--line-soft)}
+.scores--plain .score__n{
+  background:var(--paper-sink) !important; color:var(--navy-700);
+  font-size:20px; border-right:1px solid var(--line-soft);
+}
+.scores--plain .score__eg{display:none}
+.score{
+  display:grid; grid-template-columns:52px 1fr; gap:var(--sp-4);
+  align-items:stretch; border:1px solid var(--line);
+  border-radius:var(--radius); overflow:hidden; background:var(--paper);
+}
+.score__n{
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono); font-size:24px; font-weight:700; color:#fff;
+}
+.score__body{padding:var(--sp-3) var(--sp-4) var(--sp-3) 0}
+.score__lead{font-weight:700; font-size:var(--fs-body); margin-bottom:2px}
+.score__desc{font-size:var(--fs-small); color:var(--ink-soft); line-height:1.5}
+.score__eg{
+  font-size:var(--fs-small); color:var(--ink-faint);
+  margin-top:var(--sp-2); padding-top:var(--sp-2); border-top:1px dashed var(--line);
+}
+.score__eg b{color:var(--ink-soft); font-weight:700}
+.score--1 .score__n{background:var(--sc1)}
+.score--2 .score__n{background:var(--sc2)}
+.score--3 .score__n{background:var(--sc3)}
+.score--4 .score__n{background:var(--sc4)}
+.score--5 .score__n{background:var(--sc5)}
+
+/* ===== CÂY THƯ MỤC ===== */
+.tree{
+  background:var(--navy-900); border-radius:var(--radius-lg);
+  padding:var(--sp-4); margin:var(--sp-4) 0;
+  font-family:var(--font-mono); font-size:var(--fs-mono-lg);
+  line-height:1.65; overflow-x:auto; color:var(--on-navy-2);
+}
+.tree__root{color:var(--turmeric-300); font-weight:700; margin-bottom:var(--sp-2)}
+.tree ul{list-style:none; margin:0; padding:0}
+.tree li{white-space:nowrap}
+.tree__node{
+  display:inline-flex; align-items:center; gap:var(--sp-2);
+  padding:2px 8px; border-radius:var(--radius-sm);
+  cursor:pointer; user-select:none; transition:.14s;
+}
+.tree__node:hover{background:rgba(255,255,255,.09)}
+.tree__caret{
+  display:inline-block; width:15px; color:var(--turmeric-300);
+  font-size:15px; transition:transform .18s;
+}
+.tree__node.is-open .tree__caret{transform:rotate(90deg)}
+.tree__name{color:var(--on-navy-1)}
+.tree__node.is-1a .tree__name{color:var(--turmeric-300); font-weight:700}
+.tree__tag{
+  font-size:var(--fs-micro); padding:2px 9px; border-radius:11px;
+  background:rgba(240,190,77,.22); color:var(--turmeric-300);
+  border:1px solid rgba(240,190,77,.50); letter-spacing:.3px;
+}
+.tree__tag--off{
+  background:rgba(255,255,255,.09); color:var(--on-navy-4);
+  border-color:rgba(255,255,255,.20);
+}
+.tree__children{display:none; padding-left:26px; margin-top:2px}
+.tree__children.is-open{display:block}
+.tree__leaf{color:var(--on-navy-3); padding:2px 8px}
+.tree__leaf .c{color:var(--on-navy-5)}
+/* Mã thuộc đợt đang làm - sáng lên, có nhãn nhỏ bên cạnh */
+.tree__leaf.is-1a .c{color:var(--turmeric-300)}
+.tree__ma-1a{
+  color:var(--turmeric-300); font-weight:700;
+  background:rgba(240,190,77,.16); padding:2px 8px;
+  border-radius:var(--radius-sm); border:1px solid rgba(240,190,77,.38);
+}
+.tree__dot-1a{
+  font-family:var(--font-text); font-size:var(--fs-micro);
+  color:var(--turmeric-300); margin-left:var(--sp-3); letter-spacing:.3px;
+}
+/* Mã của đợt sau - mờ hơn nhưng vẫn đọc được */
+.tree__ma-off{color:var(--on-navy-4)}
+.tree__file{color:var(--on-navy-4); font-style:italic}
+.tree__hint{
+  font-family:var(--font-text); font-size:var(--fs-small);
+  color:var(--on-navy-3); margin-top:var(--sp-4); padding-top:var(--sp-3);
+  border-top:1px solid rgba(255,255,255,.20); line-height:1.65;
+}
+.tree__legend{
+  display:flex; flex-wrap:wrap; gap:var(--sp-4);
+  font-family:var(--font-text); font-size:var(--fs-small);
+  color:var(--on-navy-3); margin-bottom:var(--sp-4);
+  padding-bottom:var(--sp-3); border-bottom:1px solid rgba(255,255,255,.20);
+}
+.tree__legend i{font-style:normal; display:inline-flex; align-items:center; gap:6px}
+.tree__legend b{width:10px; height:10px; border-radius:2px; display:inline-block}
+
+/* ===== CÁC BƯỚC ===== */
+.steps{counter-reset:step; margin:var(--sp-4) 0}
+.step{
+  position:relative; padding-left:56px; padding-bottom:var(--sp-5);
+  border-left:2px solid var(--navy-100); margin-left:17px;
+}
+.step:last-child{border-left-color:transparent; padding-bottom:0}
+.step::before{
+  counter-increment:step; content:counter(step);
+  position:absolute; left:-18px; top:-3px; width:34px; height:34px;
+  background:var(--navy-600); color:#fff; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono); font-size:var(--fs-body); font-weight:700;
+  box-shadow:0 0 0 4px var(--paper);
+}
+.step--ac::before{background:var(--green-700)}
+.step__title{
+  font-size:var(--fs-h4); font-weight:700; color:var(--navy-900);
+  margin-bottom:var(--sp-2); display:flex; align-items:center;
+  gap:var(--sp-3); flex-wrap:wrap;
+}
+.step__body{font-size:var(--fs-body); color:var(--ink-soft)}
+.step__body p{margin-bottom:var(--sp-3)}
+.step__body ul{margin:var(--sp-2) 0 var(--sp-3); padding-left:20px}
+.step__body li{margin-bottom:var(--sp-2)}
+
+/* ===== MÔ PHỎNG Ô EXCEL ===== */
+.xl{
+  border:1px solid var(--line); border-radius:var(--radius);
+  overflow:hidden; margin:var(--sp-4) 0; background:var(--paper);
+}
+.xl__bar{
+  background:var(--navy-050); padding:9px var(--sp-4);
+  font-family:var(--font-mono); font-size:var(--fs-mono);
+  color:var(--navy-700); border-bottom:1px solid var(--line);
+  display:flex; justify-content:space-between; gap:var(--sp-3); flex-wrap:wrap;
+}
+.xl__bar b{color:var(--navy-900)}
+.xl table{font-size:var(--fs-body)}
+.xl th{background:var(--navy-600); font-size:var(--fs-th-xl); padding:11px var(--sp-4)}
+.xl td{padding:11px var(--sp-4)}
+.xl .fill{background:var(--turmeric-100); font-weight:700; color:var(--turmeric-700)}
+.xl .empty{color:var(--ink-faint); font-style:italic}
+/* Ô đã có sẵn nội dung - TCIT chỉ đọc */
+.xl .ro{color:var(--ink-faint)}
+/* Dạng ngang - giống layout thật của Excel.
+   Chữ nhỏ hơn phần thân bài để đủ chỗ cho tới sáu cột mà không phải kéo ngang;
+   Excel thật cũng chữ nhỏ nên nhìn còn sát thực tế hơn. */
+.xl table.xl__h{table-layout:auto; width:100%; font-size:13px}
+.xl__h th{
+  font-size:12px; padding:8px 10px; white-space:normal;
+  letter-spacing:.2px; vertical-align:bottom;
+}
+.xl__h td{
+  padding:9px 10px; vertical-align:top; line-height:1.45;
+  overflow-wrap:break-word; word-break:normal;
+}
+.xl__h tbody tr:nth-child(even){background:none}
+/* Cột số hẹp lại, không cần rộng bằng cột chữ */
+.xl__h .num{text-align:center; white-space:nowrap}
+/* Màn hẹp: không đủ chỗ cho bảng nhiều cột, cho kéo ngang trong khung bảng */
+@media (max-width:900px){
+  .xl__scroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  .xl table.xl__h{min-width:640px}
+}
+
+/* ===== HỘP HAI CỘT ===== */
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-4); margin:var(--sp-4) 0}
+.card{
+  border:1px solid var(--line); border-radius:var(--radius);
+  padding:var(--sp-4) var(--sp-5); background:var(--paper);
+}
+.card--tcit{border-top:3px solid var(--navy-600); background:var(--navy-025)}
+.card--ac{border-top:3px solid var(--green-700); background:var(--green-050)}
+.card__title{
+  font-weight:700; font-size:var(--fs-body); margin-bottom:var(--sp-3);
+  display:flex; align-items:center; gap:var(--sp-2);
+}
+.card--tcit .card__title{color:var(--navy-700)}
+.card--ac .card__title{color:var(--green-900)}
+.card ul{margin:0; padding-left:19px; font-size:var(--fs-small); color:var(--ink-soft)}
+.card li{margin-bottom:6px}
+
+/* ===== DANH SÁCH ĐỊNH NGHĨA ===== */
+.dl{margin:var(--sp-4) 0}
+.dl__row{
+  display:grid; grid-template-columns:190px 1fr; gap:var(--sp-4);
+  padding:var(--sp-3) 0; border-top:1px solid var(--line-soft); font-size:var(--fs-body);
+}
+.dl__row:first-child{border-top:none}
+.dl__k{font-weight:700; color:var(--navy-700)}
+.dl__v{color:var(--ink-soft)}
+
+/* ===== TIỆN ÍCH ===== */
+.mono-tag{
+  font-family:var(--font-mono); font-size:var(--fs-mono);
+  background:var(--navy-050); color:var(--navy-700);
+  padding:2px 7px; border-radius:4px; border:1px solid var(--navy-100);
+  white-space:nowrap;
+}
+.mono-tag--y{background:var(--turmeric-100); color:var(--turmeric-700); border-color:var(--turmeric-200)}
+.mono-tag--g{background:var(--green-050); color:var(--green-700); border-color:var(--green-200)}
+.lead{font-size:var(--fs-body-lg); color:var(--ink-soft); max-width:72ch}
+.tiny{font-size:var(--fs-small); color:var(--ink-faint); line-height:1.6}
+.pending{
+  border:1px dashed var(--line); border-radius:var(--radius);
+  padding:var(--sp-4) var(--sp-5); color:var(--ink-faint);
+  font-size:var(--fs-small); background:var(--paper-alt); font-style:italic;
+}
+ul.plain{padding-left:20px; margin:var(--sp-3) 0}
+ul.plain li{margin-bottom:var(--sp-2)}
+
+/* ===== IN ===== */
+@media print{
+  .nav,.nav__toggle{display:none}
+  .main{padding:0}
+  .sec{break-inside:avoid; box-shadow:none; border-color:#ccc}
+  .tree{background:#fff; color:#000; border:1px solid #ccc}
+  .tree__children{display:block !important}
+}
+
+/* ===== MÀN HÌNH HẸP ===== */
+@media (max-width:1024px){
+  .layout{flex-direction:column}
+  .nav{width:100%; flex:none; position:static; height:auto; padding-bottom:var(--sp-3)}
+  .nav__list{display:flex; flex-wrap:wrap; gap:2px}
+  .nav__link{border-left:none; border-bottom:3px solid transparent; padding:8px 14px}
+  .nav__link.is-active{border-left:none; border-bottom-color:var(--turmeric-300)}
+  .nav__link--sub{padding-left:14px}
+  .nav__tab{display:inline; margin-left:var(--sp-2)}
+  .nav__foot{display:none}
+  /* Màn hẹp: nav xếp ngang trên đầu, nút gập không còn ý nghĩa */
+  .nav__toggle{display:none}
+  .layout.is-collapsed .nav{
+    width:100%; flex:none; padding-left:0; padding-right:0;
+  }
+  .layout.is-collapsed .nav__brand,
+  .layout.is-collapsed .nav__list{display:block}
+  .layout.is-collapsed .nav__list{display:flex}
+  .cols__row{grid-template-columns:1fr; gap:var(--sp-1)}
+  .main{padding:var(--sp-5) var(--sp-4)}
+  .duo{grid-template-columns:1fr}
+  .dl__row{grid-template-columns:1fr; gap:2px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- ===================== ĐIỀU HƯỚNG ===================== -->
+<nav class="nav">
+  <div class="nav__brand">
+    <div class="nav__brand-title">Khảo sát hiện trạng &amp;<br>yêu cầu tài liệu ESG</div>
+    <div class="nav__brand-sub">TCIT &times; BAKER TILLY A&amp;C · ĐỢT 1A</div>
+  </div>
+  <button class="nav__toggle" id="navToggle" type="button"
+          aria-expanded="true" aria-controls="navList"
+          title="Ẩn mục lục (phím [)">
+    <span class="nav__toggle-ico" aria-hidden="true">&laquo;</span>
+    <span class="nav__toggle-txt">Ẩn mục lục</span>
+  </button>
+  <ul class="nav__list" id="navList">
+    <li><a class="nav__link" href="#s1"><span class="nav__num">1</span><span>Tổng quan</span></a></li>
+
+    <li><a class="nav__link" href="#s2"><span class="nav__num">2</span><span>Khảo sát sẵn sàng <span class="nav__tab">tab 02</span></span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s2-1"><span class="nav__num">2.1</span><span>Cách điền</span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s2-2"><span class="nav__num">2.2</span><span>Bốn mức trả lời</span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s2-3"><span class="nav__num">2.3</span><span>Thang điểm 1–5</span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s2-4"><span class="nav__num">2.4</span><span>Ví dụ một câu</span></a></li>
+
+    <li><a class="nav__link" href="#s3"><span class="nav__num">3</span><span>Yêu cầu tài liệu <span class="nav__tab">tab 03_DOT_1A</span></span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s3-1"><span class="nav__num">3.1</span><span>Thư mục lưu tài liệu</span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s3-2"><span class="nav__num">3.2</span><span>Cách điền</span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s3-3"><span class="nav__num">3.3</span><span>Sáu tình trạng</span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s3-4"><span class="nav__num">3.4</span><span>Thang điểm 1–5</span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s3-5"><span class="nav__num">3.5</span><span>Ví dụ một lượt nộp</span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s3-6"><span class="nav__num">3.6</span><span>Tài liệu bảo mật</span></a></li>
+
+    <li><a class="nav__link" href="#s4"><span class="nav__num">4</span><span>Hỏi đáp qua Teams</span></a></li>
+    <li><a class="nav__link" href="#s5"><span class="nav__num">5</span><span>Trách nhiệm hai bên</span></a></li>
+  </ul>
+  <div class="nav__foot">
+    Tài liệu hướng dẫn nội bộ dự án.
+  </div>
+</nav>
+
+<!-- ===================== NỘI DUNG ===================== -->
+<main class="main">
+<div class="wrap">
+
+  <header class="page-head">
+    <div class="page-head__eyebrow">Hướng dẫn thực hiện</div>
+    <h1>Khảo sát hiện trạng về mức độ sẵn sàng &amp; yêu cầu tài liệu</h1>
+    <p class="page-head__lead">
+      TCIT cần làm <b>hai việc</b> trong đợt này: trả lời bộ khảo sát ở tab
+      <span class="mono-tag">02_Khao_sat_san_sang</span>, và nộp tài liệu ở tab
+      <span class="mono-tag">03_DOT_1A</span>. Tài liệu này hướng dẫn từng việc,
+      mỗi việc một mục riêng.
+    </p>N · Hình thức
+  </header>
+
+  <!-- ═════════════════ 1. TỔNG QUAN ═════════════════ -->
+  <section class="sec" id="s1">
+    <div class="sec__head">
+      <span class="sec__num">1</span>
+      <h2 class="sec__title">Tổng quan</h2>
+    </div>
+
+    <p class="lead">
+      Baker Tilly A&amp;C đang đánh giá hiện trạng ESG của TCIT. Việc đánh giá dựa trên
+      tài liệu và dữ liệu thật đang có tại TCIT, nên bước đầu tiên là thu thập chúng.
+    </p>
+
+    <div class="note note--key">
+      <div class="note__title">Điều quan trọng nhất cần hiểu trước</div>
+      <p>
+        Bộ công cụ này <b>không đòi hỏi TCIT phải có đủ mọi tài liệu</b>. Nếu tài liệu chưa có,
+        chưa đầy đủ hoặc chưa được chuẩn hóa, chỉ cần ghi nhận đúng hiện trạng. Khoảng trống
+        được ghi nhận trung thực là một phát hiện có ích cho dự án, không phải lỗi của phòng ban.
+      </p>
+    </div>
+
+    <h3 class="sub">Hai việc cần làm</h3>
+    <div class="duo">
+      <div class="card card--tcit">
+        <div class="card__title">Việc 1 · Khảo sát sẵn sàng</div>
+        <ul>
+          <li>Tab <span class="mono-tag">02_Khao_sat_san_sang</span> – 76 câu hỏi</li>
+          <li>Tự đánh giá mức độ sẵn sàng của phòng ban mình</li>
+          <li>Chỉ trả lời câu thuộc chức năng của mình</li>
+          <li>Xem mục <a href="#s2">2</a></li>
+        </ul>
+      </div>
+      <div class="card card--tcit">
+        <div class="card__title">Việc 2 · Nộp tài liệu</div>
+        <ul>
+          <li>Tab <span class="mono-tag">03_DOT_1A</span> – 30 hạng mục</li>
+          <li>Tìm file, bỏ vào thư mục, cập nhật tình trạng</li>
+          <li>Hạn nộp <b>18/08/2026</b></li>
+          <li>Xem mục <a href="#s3">3</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="tiny">
+      Hai việc độc lập nhau, làm song song được. Khảo sát nên làm trước vì nó giúp
+      nhìn ra ngay mình đang thiếu gì trước khi đi tìm file.
+    </p>
+
+    <h3 class="sub">Bốn đợt nộp tài liệu</h3>
+    <p>Toàn bộ 100 hạng mục chia làm bốn đợt. Hiện đang ở <b>đợt 1A</b>.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th class="mono">Đợt</th><th>Chủ đề</th>
+          <th class="mono">Số hạng mục</th><th class="mono">Hạn nộp</th>
+        </tr></thead>
+        <tbody>
+          <tr style="background:var(--turmeric-100)">
+            <td class="mono"><b>1A</b></td>
+            <td><b>Quản trị, Chiến lược, Rủi ro, Tuân thủ</b><br>
+                <span class="tiny">Nhóm mã A · D · F – đang thực hiện</span></td>
+            <td class="num">30</td><td class="mono"><b>18/08/2026</b></td>
+          </tr>
+          <tr><td class="mono">1B</td><td>Vận hành, Kỹ thuật, Môi trường, HSEQ, An toàn</td>
+              <td class="num">40</td><td class="mono">24/08/2026</td></tr>
+          <tr><td class="mono">2</td><td>Nhân sự, Cộng đồng, Mua sắm, Khách hàng, Dữ liệu</td>
+              <td class="num">22</td><td class="mono">31/08/2026</td></tr>
+          <tr><td class="mono">3</td><td>Báo cáo, Mục tiêu, Assurance</td>
+              <td class="num">8</td><td class="mono">04/09/2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tiny">
+      Bộ khảo sát 76 câu ở tab 02 phát hành một lần cùng đợt 1A, không chia đợt.
+    </p>
+
+    <h3 class="sub">Quy ước màu dùng trong tài liệu này</h3>
+    <div class="dl">
+      <div class="dl__row">
+        <div class="dl__k"><span class="who who--tcit">TCIT</span></div>
+        <div class="dl__v">Việc do phòng ban của TCIT thực hiện.</div>
+      </div>
+      <div class="dl__row">
+        <div class="dl__k"><span class="who who--ac">A&amp;C</span></div>
+        <div class="dl__v">Việc do Baker Tilly A&amp;C thực hiện hoặc hỗ trợ.</div>
+      </div>
+    </div>
+
+    <div class="note note--key">
+      <div class="note__title">Vướng ở đâu, nhắn ngay ở đó</div>
+      <p style="margin-bottom:0">
+        Mỗi phòng ban có một nhóm chat Teams riêng. Bất kỳ thắc mắc nào –
+        kể cả câu nhỏ – cứ nhắn vào đó, A&amp;C trả lời trực tiếp.
+        Chi tiết ở mục <a href="#s4">4</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═════════════════ 2. KHẢO SÁT ═════════════════ -->
+  <section class="sec" id="s2">
+    <div class="sec__head">
+      <span class="sec__num">2</span>
+      <h2 class="sec__title">Khảo sát mức độ sẵn sàng</h2>
+    </div>
+
+    <p class="sec__intro">
+      Tab <span class="mono-tag">02_Khao_sat_san_sang</span> gồm <b>76 câu hỏi</b> tự đánh giá,
+      chia theo chủ đề từ quản trị, môi trường, an toàn tới dữ liệu và hệ thống.
+      Mỗi phòng ban chỉ trả lời những câu thuộc chức năng của mình.
+    </p>
+
+    <div class="note note--tcit">
+      <div class="note__title">Đây là tự đánh giá, chưa phải kết luận</div>
+      <p style="margin-bottom:0">
+        Kết quả khảo sát là điểm khởi đầu để hai bên cùng nhìn vào,
+        chưa phải kết luận chính thức về mức độ trưởng thành ESG của TCIT.
+      </p>
+    </div>
+
+    <!-- 2.1 -->
+    <div class="subsec" id="s2-1">
+      <div class="subsec__head">
+        <span class="subsec__num">2.1</span>
+        <h3 class="subsec__title">Cách điền</h3>
+      </div>
+
+      <p>
+        Tab có 8 cột. Cột A đến E đã có sẵn nội dung. TCIT điền
+        <b class="c-must">F</b> và <b class="c-must">G</b>, thêm
+        <b class="c-opt">H</b> khi cần.
+      </p>
+
+      <div class="legend">
+        <span class="legend__i"><span class="legend__sw legend__sw--must"></span>Bắt buộc điền</span>
+        <span class="legend__i"><span class="legend__sw legend__sw--opt"></span>Điền khi cần</span>
+        <span class="legend__i"><span class="legend__sw legend__sw--ro"></span>Đã có sẵn, không gõ</span>
+      </div>
+
+      <div class="cols cols--all">
+        <div class="cols__row cols__row--ro"><div class="cols__k">A · Mã</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">B · Nhóm</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">C · Câu hỏi</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">D · Vì sao quan trọng</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">E · Đầu mối đề xuất</div><div class="cols__v"></div></div>
+
+        <div class="cols__row">
+          <div class="cols__k cols__k--must">F · Trả lời</div>
+          <div class="cols__v"><b>Chọn từ danh sách.</b> Xem mục <a href="#s2-2">2.2</a>.</div>
+        </div>
+        <div class="cols__row">
+          <div class="cols__k cols__k--must">G · Điểm sẵn sàng 1–5</div>
+          <div class="cols__v">Chọn từ danh sách 1 đến 5. Xem mục <a href="#s2-3">2.3</a>.</div>
+        </div>
+        <div class="cols__row">
+          <div class="cols__k cols__k--opt">H · Ghi chú / bằng chứng</div>
+          <div class="cols__v">Gõ tự do. Đây là cột quan trọng nhất – xem hộp bên dưới.</div>
+        </div>
+      </div>
+
+      <h3 class="sub">Tìm câu của phòng ban mình</h3>
+      <p>
+        Lọc theo cột <span class="mono-tag">E · Đầu mối chức năng đề xuất</span>.
+        Do có các câu hỏi ghép từ nhiều đầu mối chức năng, anh/chị nhớ
+        <b>tick tất cả những dòng có tên chức năng của mình</b>.
+      </p>
+      <p class="tiny">
+        Ví dụ khối HSE cần tick cả <span class="mono-tag">HSE</span>,
+        <span class="mono-tag">HSE/Kỹ thuật</span>,
+        <span class="mono-tag">HSE/Vận hành</span>,
+        <span class="mono-tag">HSE/Pháp chế</span>… Nếu có bất kỳ thắc mắc nào hãy hỏi ngay A&amp;C.
+      </p>
+
+      <div class="note note--key">
+        <div class="note__title">Cột ghi chú rất quan trọng</div>
+        <p>
+          Nếu có bằng chứng hoặc thông tin liên quan, <b>phải ghi lại</b> vào cột
+          <span class="mono-tag">H</span>. Ví dụ  trả lời "Một phần" không kèm ghi chú
+          thì A&amp;C sẽ không biết có gì và thiếu gì và cần hỏi lại.
+        </p>
+        <p style="margin-bottom:0">Ghi càng cụ thể càng tốt:</p>
+        <ul class="plain" style="margin-bottom:0">
+          <li>Tên tài liệu hoặc hệ thống đang lưu dữ liệu đó</li>
+          <li>Đầu mối đang giữ thông tin</li>
+          <li>Vấn đề cần làm rõ...</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2.2 -->
+    <div class="subsec" id="s2-2">
+      <div class="subsec__head">
+        <span class="subsec__num">2.2</span>
+        <h3 class="subsec__title">Bốn mức trả lời</h3>
+      </div>
+
+      <p>Cột <span class="mono-tag">F · Trả lời</span> có sẵn danh sách để chọn.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th style="width:160px">Trả lời</th><th>Dùng khi nào</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><b>Có</b></td>
+                <td>Có đầy đủ thứ mà câu hỏi đang hỏi.</td></tr>
+            <tr><td><b>Không</b></td>
+                <td>Không có. Không có làm và không có thông tin khác.</td></tr>
+            <tr><td><b>Một phần</b></td>
+                <td>Có nhưng chưa đủ, hoặc chỉ đúng ở một số mảng.
+                    <span class="cols__note">Chọn mức này thì <b>phải ghi rõ phần nào có, phần nào thiếu</b> ở cột H-Ghi chú.</span></td></tr>
+            <tr><td><b>Chưa rõ</b></td>
+                <td>Chưa biết câu trả lời, hoặc chưa xác định được ai đang giữ thông tin.
+                    </td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tiny">
+        Nếu anh/chị vẫn còn phân vân giữa hai mức, chọn mức thấp hơn rồi ghi rõ lý do vào cột H.
+      </p>
+    </div>
+
+    <!-- 2.3 -->
+    <div class="subsec" id="s2-3">
+      <div class="subsec__head">
+        <span class="subsec__num">2.3</span>
+        <h3 class="subsec__title">Thang điểm sẵn sàng 1–5</h3>
+      </div>
+
+      <p>
+        Cột <span class="mono-tag">G</span>. Thang này <b>dùng chung cho cả hai tab</b> –
+        tab nộp tài liệu cũng chấm theo đúng năm mức này.
+      </p>
+
+      <div class="scores">
+        <div class="score score--1">
+          <div class="score__n">1</div>
+          <div class="score__body">
+            <div class="score__lead">Chưa có</div>
+            <div class="score__desc">Chưa có tài liệu, chưa xác định nguồn hoặc người phụ trách.</div>
+          </div>
+        </div>
+        <div class="score score--2">
+          <div class="score__n">2</div>
+          <div class="score__body">
+            <div class="score__lead">Có nhưng rời rạc</div>
+            <div class="score__desc">Có tài liệu rời rạc, lỗi thời hoặc chưa được kiểm soát.</div>
+            <div class="score__eg"><b>Ví dụ:</b> có hóa đơn điện nhưng chưa có dữ liệu phân bổ theo thiết bị.</div>
+          </div>
+        </div>
+        <div class="score score--3">
+          <div class="score__n">3</div>
+          <div class="score__body">
+            <div class="score__lead">Có một phần</div>
+            <div class="score__desc">Có một phần, có thể tổng hợp thủ công nhưng còn thiếu hoặc chưa thống nhất.</div>
+            <div class="score__eg"><b>Ví dụ:</b> hóa đơn điện có, phân bổ theo thiết bị làm được nhưng phải tính tay từng kỳ.</div>
+          </div>
+        </div>
+        <div class="score score--4">
+          <div class="score__n">4</div>
+          <div class="score__body">
+            <div class="score__lead">Tương đối đầy đủ</div>
+            <div class="score__desc">Có tương đối đầy đủ, được quản lý ở cấp phòng ban và có thể truy xuất.</div>
+            <div class="score__eg"><b>Ví dụ:</b> có báo cáo HSEQ định kỳ, có người phụ trách và bảng theo dõi hành động.</div>
+          </div>
+        </div>
+        <div class="score score--5">
+          <div class="score__n">5</div>
+          <div class="score__body">
+            <div class="score__lead">Có hệ thống</div>
+            <div class="score__desc">Có hệ thống, cập nhật định kỳ, có chủ sở hữu, phương pháp kiểm soát và bằng chứng rõ ràng.</div>
+            <div class="score__eg"><b>Ví dụ:</b> dữ liệu tích hợp trên hệ thống, có kiểm soát truy cập, kiểm tra chất lượng và lịch sử thay đổi.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note note--key">
+        <div class="note__title">Không chọn điểm cao chỉ vì tài liệu tồn tại</div>
+        <p>
+          Điểm phản ánh cả bốn thứ: <b>mức đầy đủ</b>, <b>tính cập nhật</b>,
+          <b>khả năng truy xuất</b>, và <b>có người chịu trách nhiệm hay không</b>.
+        </p>
+        <p style="margin-bottom:0">Bốn câu tự hỏi trước khi chấm:</p>
+        <ul class="plain" style="margin-bottom:0">
+          <li>Tài liệu có <b>đầy đủ</b> không, hay chỉ có một phần?</li>
+          <li>Có <b>cập nhật</b> gần đây không, hay đã cũ?</li>
+          <li>Khi cần thì <b>tìm ra ngay</b> được không?</li>
+          <li>Có <b>người chịu trách nhiệm</b> giữ và cập nhật không?</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2.4 -->
+    <div class="subsec" id="s2-4">
+      <div class="subsec__head">
+        <span class="subsec__num">2.4</span>
+        <h3 class="subsec__title">Ví dụ một câu</h3>
+      </div>
+
+      <p>Câu <span class="mono-tag mono-tag--y">A01</span> – về đầu mối ESG, giao cho Ban Lãnh đạo / Đầu mối ESG nội bộ.</p>
+
+      <div class="xl">
+        <div class="xl__bar"><span>Tab <b>02_Khao_sat_san_sang</b> · dòng A01</span><span>Ô nền vàng là ô cần điền · ô xám đã có sẵn</span></div>
+        <div class="xl__scroll">
+          <table class="xl__h">
+            <thead>
+              <tr>
+                <th class="mono">C · Câu hỏi</th>
+                <th class="mono">F · Trả lời</th>
+                <th class="mono">G · Điểm</th>
+                <th class="mono">H · Ghi chú / bằng chứng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ro">TCIT đã có đầu mối/nhóm phụ trách ESG chính thức chưa?</td>
+                <td class="fill">Một phần</td>
+                <td class="fill num" style="color:var(--sc2)">2</td>
+                <td class="fill">Có nhóm làm việc từ 08/2026, chưa có quyết định chính thức. Đầu mối hiện là [chức danh].</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="note note--tcit">
+        <div class="note__title">Vì sao trả lời "Một phần" và chấm 2 điểm</div>
+        <p style="margin-bottom:0">
+          Có nhóm làm việc nên không chọn "Không", nhưng chưa có quyết định chính thức nên chỉ mới được <b>Một phần</b>. Chấm 2 vì đang "có nhưng chưa được kiểm soát": chưa có văn bản, chưa rõ ai chịu trách nhiệm lâu dài.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ 3. YÊU CẦU TÀI LIỆU ═════════════════ -->
+  <section class="sec" id="s3">
+    <div class="sec__head">
+      <span class="sec__num">3</span>
+      <h2 class="sec__title">Yêu cầu tài liệu đợt 1A</h2>
+    </div>
+
+    <p class="sec__intro">
+      Tab <span class="mono-tag">03_DOT_1A</span> chứa đúng <b>30 hạng mục</b> của đợt 1A.
+      Việc cần làm: lọc phần của phòng ban mình, tìm file, bỏ vào thư mục trên OneDrive,
+      rồi cập nhật tình trạng và ngày dự kiến nộp.
+    </p>
+
+    <!-- 3.1 -->
+    <div class="subsec" id="s3-1">
+      <div class="subsec__head">
+        <span class="subsec__num">3.1</span>
+        <h3 class="subsec__title">Thư mục lưu tài liệu</h3>
+      </div>
+
+      <p>
+        Tài liệu thu về được lưu trên OneDrive của TCIT, chia theo <b>9 nhóm chủ đề</b>
+        tương ứng chín chữ cái đầu của mã. Bên trong mỗi nhóm, <b>mỗi mã một thư mục con</b>.
+      </p>
+
+      <div class="note note--tcit">
+        <div class="note__title">Ai tạo thư mục</div>
+        <p style="margin-bottom:0">
+          <span class="who who--tcit">TCIT</span> tạo thư mục gốc trên OneDrive và chia sẻ quyền cho A&amp;C.
+          Phần tổ chức các mục bên trong thì có thể cấp quyền edit để <span class="who who--ac">A&amp;C</span> hỗ trợ dựng sẵn.
+        </p>
+      </div>
+
+      <div class="tree" id="tree">
+        <div class="tree__legend">
+          <i><b style="background:var(--turmeric-300)"></b> Mã cần nộp trong đợt 1A</i>
+          <i><b style="background:var(--on-navy-4)"></b> Mã của các đợt sau</i>
+          <i style="margin-left:auto">Bấm vào tên nhóm để mở hoặc đóng</i>
+        </div>
+        <div class="tree__root">TCIT_ESG_2026/</div>
+        <ul id="treeRoot"></ul>
+        <div class="tree__hint">
+          Thư mục được tạo sẵn cho <b>cả 100 mã</b> của bốn đợt. Đợt 1A cần nộp
+          <b style="color:var(--turmeric-300)">30 mã</b> – nằm trọn trong ba nhóm
+          <b style="color:var(--turmeric-300)">A</b> (10 mã),
+          <b style="color:var(--turmeric-300)">D</b> (8 mã) và
+          <b style="color:var(--turmeric-300)">F</b> (12 mã).
+          Sáu nhóm còn lại thuộc các đợt sau, thư mục có sẵn nhưng chưa cần bỏ file vào.
+        </div>
+      </div>
+
+      <h3 class="sub">Quy tắc đặt tên file</h3>
+      <p>Tên file <b>bắt đầu bằng mã yêu cầu</b>, để tìm và đối chiếu được ngay.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Nên</th><th>Không nên</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="mono" style="color:var(--sc5)">F03_Quy_che_HDQT_va_Uy_ban_2025.pdf</td>
+              <td class="mono" style="color:var(--sc1)">quy che hdqt (ban moi nhat).pdf</td>
+            </tr>
+            <tr>
+              <td class="mono" style="color:var(--sc5)">A04_Quyet_dinh_phan_cong_ESG_2026.pdf</td>
+              <td class="mono" style="color:var(--sc1)">A04-scan0012.pdf</td>
+            </tr>
+            <tr>
+              <td class="mono" style="color:var(--sc5)">D01_Quy_che_chong_tham_nhung_v2.docx</td>
+              <td class="mono" style="color:var(--sc1)">ESG A&amp;C chống tham nhũng.docx</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tiny">
+        Nếu cùng một tài liệu, cùng năm mà có nhiều phần thì chỉ cần bổ sung p1, p2...:
+        <span class="mono-tag">F03_Quy_che_HDQT_2025_p1.pdf</span>,
+        <span class="mono-tag">F03_Quy_che_HDQT_2025_p2.pdf</span>.
+      </p>
+    </div>
+
+    <!-- 3.2 -->
+    <div class="subsec" id="s3-2">
+      <div class="subsec__head">
+        <span class="subsec__num">3.2</span>
+        <h3 class="subsec__title">Cách điền</h3>
+      </div>
+
+      <div class="legend">
+        <span class="legend__i"><span class="legend__sw legend__sw--must"></span>Bắt buộc điền</span>
+        <span class="legend__i"><span class="legend__sw legend__sw--opt"></span>Điền khi cần</span>
+        <span class="legend__i"><span class="legend__sw legend__sw--ro"></span>Có sẵn, không sửa</span>
+      </div>
+
+      <div class="cols cols--all">
+        <div class="cols__row cols__row--ro"><div class="cols__k">A · Mã</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">B · Nội dung cần cung cấp</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">C · Là gì?</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">D · Vì sao cần?</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">E · Cách chuẩn bị</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">F · Chuẩn mực</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">G · Kỳ dữ liệu</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">H · Ưu tiên</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">I · Phòng ban chủ trì</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">J · Team in charge</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">K · Phối hợp</div><div class="cols__v"></div></div>
+
+        <div class="cols__row">
+          <div class="cols__k cols__k--opt">L · Đề xuất điều chỉnh</div>
+          <div class="cols__v">Gõ tự do. Dùng khi đầu mối thấy hạng mục giao chưa đúng.
+            <span class="cols__note">Ghi xong anh/chị nhớ nhắn lên group chat để điều chỉnh.</span></div>
+        </div>
+        <div class="cols__row">
+          <div class="cols__k cols__k--must">M · Tình trạng</div>
+          <div class="cols__v"><b>Chọn một trong sáu giá trị.</b> Xem mục <a href="#s3-3">3.3</a>.</div>
+        </div>
+        <div class="cols__row">
+          <div class="cols__k cols__k--must">N · Hình thức cung cấp</div>
+          <div class="cols__v">Chọn từ danh sách: DOC/PDF · Excel/CSV · Ảnh/scan · Hệ thống/TOS/E-Port ·
+            Biên bản/quyết định · Xem tại chỗ (bảo mật) · Khác.</div>
+        </div>
+
+        <div class="cols__row cols__row--ro"><div class="cols__k">O · Người phụ trách</div><div class="cols__v"></div></div>
+
+        <div class="cols__row">
+          <div class="cols__k cols__k--must">P · Ngày dự kiến nộp</div>
+          <div class="cols__v">Ngày dạng dd/mm/yyyy, <b>không muộn hơn 28/08/2026</b> – đây là ngày
+            chốt data room, không phải hạn nộp. Hạn nộp đợt 1A vẫn là <b>18/08/2026</b>.
+            <span class="cols__note">Chưa tìm được file vẫn nên điền ngày dự kiến – để A&amp;C biết khi nào quay lại.</span></div>
+        </div>
+        <div class="cols__row">
+          <div class="cols__k cols__k--must">Q · Điểm sẵn sàng 1–5</div>
+          <div class="cols__v">Cùng thang điểm với tab khảo sát. Xem mục <a href="#s3-4">3.4</a>.</div>
+        </div>
+
+        <div class="cols__row cols__row--ro"><div class="cols__k">R · Đường dẫn</div><div class="cols__v"></div></div>
+
+        <div class="cols__row">
+          <div class="cols__k cols__k--opt">S · TCIT Ghi chú</div>
+          <div class="cols__v">Lưu ý gì thì ghi vào đây: hạn chế, khoảng trống, cách tiếp cận tài liệu bảo mật.</div>
+        </div>
+
+        <div class="cols__row cols__row--ro"><div class="cols__k">T · A&amp;C Ghi chú</div><div class="cols__v"></div></div>
+      </div>
+
+      <div class="note note--key">
+        <div class="note__title">Chưa tìm được file cũng đừng để trống</div>
+        <p style="margin-bottom:0">
+          Vẫn điền <span class="pill pill--dangcb">Đang chuẩn bị</span> và ngày dự kiến,
+          rồi quay lại sau. Ô trống khiến A&amp;C không phân biệt được
+          "chưa ai đụng tới" với "đang làm dở".
+        </p>
+      </div>
+    </div>
+
+    <!-- 3.3 -->
+    <div class="subsec" id="s3-3">
+      <div class="subsec__head">
+        <span class="subsec__num">3.3</span>
+        <h3 class="subsec__title">Sáu tình trạng tài liệu</h3>
+      </div>
+
+      <p>Cột <span class="mono-tag">M · Tình trạng</span> có sáu giá trị.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th style="width:160px">Tình trạng</th>
+            <th>Dùng khi nào</th>
+            <th style="width:180px">Ý nghĩa với tiến độ</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="pill pill--chuagui">Chưa gửi</span></td>
+              <td>Tài liệu được xác định là có nhưng chưa cung cấp</td>
+              <td class="tiny">Còn việc phải làm</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill--dangcb">Đang chuẩn bị</span></td>
+              <td>Đầu mối đang tổng hợp, trích xuất hoặc xin phê duyệt</td>
+              <td class="tiny">Còn việc phải làm</td>
+            </tr>
+            <tr>
+              <td><span class="pill pill--dacc">Đã cung cấp</span></td>
+              <td>File hoặc quyền truy cập đã được chuyển cho nhóm dự án</td>
+              <td class="tiny" style="color:var(--sc5)"><b>Đã xong</b></td>
+            </tr>
+            <tr>
+              <td><span class="pill pill--khongco">Không có</span></td>
+              <td>TCIT xác nhận hiện chưa có tài liệu hoặc dữ liệu này</td>
+              <td class="tiny" style="color:var(--sc5)"><b>Đã xong</b><br>
+                  <span style="color:var(--ink-faint)">Câu trả lời hợp lệ, không phải điểm trừ</span></td>
+            </tr>
+            <tr>
+              <td><span class="pill pill--khongad">Không áp dụng</span></td>
+              <td>Yêu cầu không phù hợp với phạm vi hoạt động của TCIT</td>
+              <td class="tiny"><b>Loại khỏi thống kê</b><br>
+                  <span style="color:var(--ink-faint)">Không tính vào tỷ lệ hoàn thành</span></td>
+            </tr>
+            <tr>
+              <td><span class="pill pill--canlamro">Cần làm rõ</span></td>
+              <td>Chưa xác định được nguồn, phạm vi hoặc đơn vị phụ trách</td>
+              <td class="tiny">Còn việc phải làm<br>
+                  <span style="color:var(--ink-faint)">Nên nhắn Teams để gỡ ngay</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note note--key">
+        <div class="note__title">Phân biệt ba trường hợp dễ nhầm</div>
+        <p>
+          <b><span class="pill pill--khongco">Không có</span></b> – tài liệu này lẽ ra TCIT nên có,
+          nhưng hiện chưa có. Đây là một phát hiện của dự án.
+        </p>
+        <p>
+          <b><span class="pill pill--khongad">Không áp dụng</span></b> – yêu cầu này không liên quan
+          tới hoạt động của TCIT, hỏi cũng không đúng chỗ.
+        </p>
+        <p style="margin-bottom:0">
+          <b><span class="pill pill--canlamro">Cần làm rõ</span></b> – chưa biết tài liệu này thuộc về ai,
+          hay chưa hiểu yêu cầu đang hỏi gì. Chọn giá trị này rồi nhắn vào nhóm Teams.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- 3.4 - thang điểm nhắc lại, gập sẵn vì đã có đầy đủ ở mục 2.3 -->
+    <div class="subsec" id="s3-4">
+      <div class="fold">
+        <button class="fold__head" type="button" aria-expanded="false" data-fold>
+          <span class="fold__caret">▶</span>
+          <span>3.4 · Thang điểm sẵn sàng 1–5</span>
+          <span class="fold__hint">giống mục 2.3 – bấm để xem lại</span>
+        </button>
+        <div class="fold__body">
+          <p>
+            Cột <span class="mono-tag">Q</span> dùng đúng thang điểm của tab khảo sát.
+            Bản đầy đủ kèm ví dụ ở mục <a href="#s2-3">2.3</a>.
+          </p>
+          <div class="scores scores--plain">
+            <div class="score score--1"><div class="score__n">1</div>
+              <div class="score__body"><div class="score__lead">Chưa có</div>
+              <div class="score__desc">Chưa có tài liệu, chưa xác định nguồn hoặc người phụ trách.</div></div></div>
+            <div class="score score--2"><div class="score__n">2</div>
+              <div class="score__body"><div class="score__lead">Có nhưng rời rạc</div>
+              <div class="score__desc">Có tài liệu rời rạc, lỗi thời hoặc chưa được kiểm soát.</div></div></div>
+            <div class="score score--3"><div class="score__n">3</div>
+              <div class="score__body"><div class="score__lead">Có một phần</div>
+              <div class="score__desc">Có một phần, tổng hợp thủ công được nhưng còn thiếu hoặc chưa thống nhất.</div></div></div>
+            <div class="score score--4"><div class="score__n">4</div>
+              <div class="score__body"><div class="score__lead">Tương đối đầy đủ</div>
+              <div class="score__desc">Có tương đối đầy đủ, quản lý ở cấp phòng ban và truy xuất được.</div></div></div>
+            <div class="score score--5"><div class="score__n">5</div>
+              <div class="score__body"><div class="score__lead">Có hệ thống</div>
+              <div class="score__desc">Có hệ thống, cập nhật định kỳ, có chủ sở hữu, phương pháp kiểm soát và bằng chứng rõ ràng.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.5 ví dụ -->
+    <div class="subsec" id="s3-5">
+      <div class="subsec__head">
+        <span class="subsec__num">3.5</span>
+        <h3 class="subsec__title">Ví dụ một lượt nộp</h3>
+      </div>
+
+      <p>
+        Lấy một hạng mục thật đi hết từ đầu tới cuối:
+        mã <span class="mono-tag mono-tag--y">F03</span> – Quy chế hoạt động của HĐQT và các ủy ban,
+        giao cho <b>Thư ký HĐQT / Quản trị công ty</b>.
+      </p>
+
+      <h4 class="sub4">Bước 1 · Nhìn thấy gì trong file</h4>
+      <div class="xl">
+        <div class="xl__bar"><span>Tab <b>03_DOT_1A</b></span><span>Dòng của mã F03</span></div>
+        <div class="xl__scroll">
+          <table class="xl__h">
+            <thead>
+              <tr>
+                <th class="mono">A · Mã</th>
+                <th class="mono">B · Nội dung cần cung cấp</th>
+                <th class="mono">C · Là gì?</th>
+                <th class="mono">H · Ưu tiên</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ro mono"><b>F03</b></td>
+                <td class="ro">Quy chế hoạt động của HĐQT và các ủy ban/tiểu ban: kiểm toán, rủi ro, chiến lược/ESG, nhân sự–thù lao nếu có</td>
+                <td class="ro">Terms of reference, thành phần, thẩm quyền, lịch họp và chế độ báo cáo.</td>
+                <td class="ro mono">Cao</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h4 class="sub4">Bước 2 · Tìm file trong hồ sơ phòng ban</h4>
+      <p>
+        Thư ký HĐQT tìm được <b>Quy chế hoạt động HĐQT ban hành năm 2025</b> ở dạng PDF,
+        và <b>Quy chế Ủy ban Kiểm toán</b> ở một file riêng. Hai file, cùng một mã.
+      </p>
+
+      <h4 class="sub4">Bước 3 · Đặt tên và bỏ vào thư mục</h4>
+      <div class="tree" style="font-size:var(--fs-mono)">
+        <div class="tree__root">TCIT_ESG_2026/</div>
+        <div style="padding-left:16px">
+          <div class="tree__leaf"><span class="c">└──</span> F1-12_QUAN-TRI-DOANH-NGHIEP/</div>
+          <div style="padding-left:26px">
+            <div class="tree__leaf"><span class="c">└──</span>
+              <span class="tree__ma-1a">F03/</span></div>
+            <div style="padding-left:26px">
+              <div class="tree__leaf"><span class="c">├──</span>
+                <span class="tree__file">F03_Quy_che_hoat_dong_HDQT_2025.pdf</span></div>
+              <div class="tree__leaf"><span class="c">└──</span>
+                <span class="tree__file">F03_Quy_che_Uy_ban_Kiem_toan_2025.pdf</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="sub4">Bước 4 · Điền vào file Excel</h4>
+      <div class="xl">
+        <div class="xl__bar"><span>Tab <b>03_DOT_1A</b> · dòng F03</span><span>Ô nền vàng là ô cần điền · ô xám đã có sẵn</span></div>
+        <div class="xl__scroll">
+          <table class="xl__h">
+            <thead>
+              <tr>
+                <th class="mono">M · Tình trạng</th>
+                <th class="mono">N · Hình thức</th>
+                <th class="mono">O · Người phụ trách</th>
+                <th class="mono">P · Ngày dự kiến</th>
+                <th class="mono">Q · Điểm</th>
+                <th class="mono">R · Đường dẫn</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fill"><span class="pill pill--dacc">Đã cung cấp</span></td>
+                <td class="fill">DOC/PDF</td>
+                <td class="ro">[Thư ký HĐQT]</td>
+                <td class="fill mono">12/08/2026</td>
+                <td class="fill num" style="color:var(--sc4)">4</td>
+                <td class="ro mono">F1-12_QUAN-TRI-<wbr>DOANH-NGHIEP/<wbr>F03/</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="note note--tcit">
+        <div class="note__title">Vì sao chấm 4 điểm mà không phải 5</div>
+        <p style="margin-bottom:0">
+          Quy chế có đầy đủ, đang hiệu lực, phòng ban quản lý và truy xuất được – đó là mức 4.
+          Để đạt mức 5 thì cần thêm: có lịch rà soát định kỳ, có người chịu trách nhiệm cập nhật
+          được ghi rõ, và có lịch sử phiên bản. Chấm đúng hiện trạng quan trọng hơn chấm cao.
+        </p>
+      </div>
+
+      <h4 class="sub4">Trường hợp khác: tài liệu chưa có</h4>
+      <p>
+        Giả sử mã <span class="mono-tag mono-tag--y">A04</span> – Quyết định phân công đầu mối ESG –
+        mà TCIT chưa từng ban hành. Cách xử lý:
+      </p>
+      <div class="xl">
+        <div class="xl__bar"><span>Tab <b>03_DOT_1A</b> · dòng A04</span><span>Chưa có tài liệu</span></div>
+        <div class="xl__scroll">
+          <table class="xl__h">
+            <thead>
+              <tr>
+                <th class="mono">M · Tình trạng</th>
+                <th class="mono">N · Hình thức</th>
+                <th class="mono">Q · Điểm</th>
+                <th class="mono">S · TCIT Ghi chú</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fill"><span class="pill pill--khongco">Không có</span></td>
+                <td class="empty">(để trống)</td>
+                <td class="fill num" style="color:var(--sc1)">1</td>
+                <td class="fill">Chưa ban hành quyết định chính thức. Hiện đầu mối ESG do [chức danh] kiêm nhiệm.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="tiny">
+        Ghi <span class="pill pill--khongco">Không có</span> là câu trả lời hợp lệ và đã hoàn tất,
+        không phải điểm trừ. Điều dự án cần là biết đúng hiện trạng.
+      </p>
+    </div>
+
+    <!-- 3.6 bảo mật -->
+    <div class="subsec" id="s3-6">
+      <div class="subsec__head">
+        <span class="subsec__num">3.6</span>
+        <h3 class="subsec__title">Tài liệu bảo mật</h3>
+      </div>
+
+      <p>
+        Không phải tài liệu nào cũng chuyển file được. TCIT có sẵn năm cách xử lý,
+        cứ theo đó mà làm.
+      </p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:230px">Cách xử lý</th><th>Khi nào dùng</th></tr></thead>
+          <tbody>
+            <tr><td><b>Cho xem tại chỗ</b></td>
+                <td>Tài liệu không được ra khỏi TCIT. A&amp;C tới xem, không sao chép.</td></tr>
+            <tr><td><b>Cung cấp bản tóm tắt</b></td>
+                <td>Chỉ cần nội dung chính, không cần bản đầy đủ.</td></tr>
+            <tr><td><b>Ẩn thông tin nhạy cảm</b></td>
+                <td>Che phần nhạy cảm (giá, lương, thông tin cá nhân) rồi gửi phần còn lại.</td></tr>
+            <tr><td><b>Thư mục có phân quyền</b></td>
+                <td>Chỉ cấp quyền cho một vài người của A&amp;C, có thể thu hồi sau.</td></tr>
+            <tr><td><b>Chỉ phần liên quan</b></td>
+                <td>Trích đúng phần thuộc phạm vi đánh giá, bỏ phần còn lại.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note note--key">
+        <div class="note__title">Không chuyển được file, không có nghĩa là "không có"</div>
+        <p style="margin-bottom:0">
+          Nếu tài liệu có thật nhưng không gửi file được, chọn tình trạng
+          <span class="pill pill--dacc">Đã cung cấp</span> kèm hình thức
+          <b>Xem tại chỗ (bảo mật)</b> ở cột N – chứ không chọn
+          <span class="pill pill--khongco">Không có</span>.
+          Ghi cách tiếp cận vào cột <span class="mono-tag">S · TCIT Ghi chú</span>.
+        </p>
+      </div>
+
+      <p class="tiny">
+        Không chắc tài liệu nào thuộc diện bảo mật, hay không rõ nên dùng cách nào –
+        nhắn vào nhóm Teams, A&amp;C sẽ trao đổi trực tiếp.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═════════════════ 4. TEAMS ═════════════════ -->
+  <section class="sec" id="s4">
+    <div class="sec__head">
+      <span class="sec__num">4</span>
+      <h2 class="sec__title">Hỏi đáp qua nhóm Teams</h2>
+    </div>
+
+    <div class="note note--key" style="margin-top:0">
+      <div class="note__title">Đây là kênh gỡ vướng chính của dự án</div>
+      <p>
+        Mỗi nhóm chức năng / phòng ban có <b>một nhóm chat Teams riêng</b>.
+        Bất kỳ thắc mắc hoặc khó khăn nào, chỉ cần nhắn vào đó –
+        <span class="who who--ac">A&amp;C</span> phản hồi trực tiếp để gỡ nhanh.
+      </p>
+      <p style="margin-bottom:0">
+        <b>Không cần đợi họp, không cần gửi email vòng vo.</b> Vướng ở đâu nhắn ở đó,
+        kể cả câu hỏi nhỏ.
+      </p>
+    </div>
+
+    <h3 class="sub">Những việc nên nhắn ngay</h3>
+    <div class="duo">
+      <div class="card card--tcit">
+        <div class="card__title">Về khảo sát (tab 02)</div>
+        <ul>
+          <li>Không rõ câu hỏi đang hỏi gì</li>
+          <li>Không biết câu này có thuộc phòng mình không</li>
+          <li>Phân vân giữa hai mức trả lời</li>
+          <li>Không biết chấm mấy điểm</li>
+        </ul>
+      </div>
+      <div class="card card--tcit">
+        <div class="card__title">Về tài liệu (tab 03_DOT_1A)</div>
+        <ul>
+          <li>Không hiểu hạng mục đang yêu cầu tài liệu gì</li>
+          <li>Không rõ tài liệu mình có, có đúng thứ được yêu cầu không</li>
+          <li>Hạng mục giao chưa đúng phòng ban</li>
+          <li>Tài liệu thuộc nhiều phòng, chưa biết ai chủ trì</li>
+          <li>Không chắc tài liệu có thuộc diện bảo mật không</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card card--tcit" style="margin-top:var(--sp-4)">
+      <div class="card__title">Về kỹ thuật</div>
+      <ul style="columns:2; column-gap:var(--sp-6)">
+        <li>Không mở được thư mục hoặc thiếu quyền OneDrive</li>
+        <li>File Excel báo lỗi hoặc hiện sai</li>
+        <li>Không tìm thấy tên phòng ban mình trong danh sách lọc</li>
+        <li>Ô droplist không cho chọn giá trị cần dùng</li>
+      </ul>
+    </div>
+
+    <h3 class="sub">Nhắn thế nào cho nhanh được trả lời</h3>
+    <p>Nêu <b>mã hạng mục hoặc mã câu hỏi</b> ngay đầu tin nhắn, A&amp;C tra được ngay không phải hỏi lại.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Nên</th><th>Chậm hơn</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>"<b>F07</b> – bên mình có quy trình quản lý rủi ro nhưng chưa ban hành chính thức,
+                vậy ghi Không có hay Đang chuẩn bị?"</td>
+            <td class="tiny">"Cho hỏi phần rủi ro team có quy trình nhưng chưa có tài liệu ban hành thì cụ thể ghi như nào"</td>
+          </tr>
+          <tr>
+            <td>"<b>Câu G02</b> – chỉ số an toàn bên mình theo dõi theo tháng nhưng chưa có LTIFR,
+                vậy trả lời Một phần hay Không?"</td>
+            <td class="tiny">"Câu về an toàn team chưa hiểu rõ"</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═════════════════ 5. TRÁCH NHIỆM ═════════════════ -->
+  <section class="sec" id="s5">
+    <div class="sec__head">
+      <span class="sec__num">5</span>
+      <h2 class="sec__title">Trách nhiệm hai bên</h2>
+    </div>
+
+    <div class="duo">
+      <div class="card card--tcit">
+        <div class="card__title">Đầu mối dự án TCIT</div>
+        <ul>
+          <li>Phân công đầu mối chức năng cho từng nhóm tài liệu</li>
+          <li>Theo dõi tiến độ cung cấp</li>
+          <li>Kiểm tra tính đầy đủ của tên file và đường dẫn</li>
+          <li>Tổng hợp câu hỏi cần làm rõ</li>
+          <li>Điều phối phỏng vấn và quyền tiếp cận tài liệu</li>
+          <li>Xác nhận các trường hợp không có hoặc không áp dụng</li>
+        </ul>
+      </div>
+      <div class="card card--tcit">
+        <div class="card__title">Đầu mối chức năng (phòng ban)</div>
+        <ul>
+          <li>Xác định đúng tài liệu thuộc phạm vi phụ trách</li>
+          <li>Cập nhật tình trạng và điểm sẵn sàng</li>
+          <li>Cung cấp tài liệu đúng kỳ, đúng phiên bản</li>
+          <li>Giải thích phương pháp lập dữ liệu</li>
+          <li>Xác nhận các hạn chế hoặc khoảng trống</li>
+          <li>Tham gia phỏng vấn khi cần</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card card--ac" style="margin-top:var(--sp-4)">
+      <div class="card__title">Baker Tilly A&amp;C</div>
+      <ul style="columns:2; column-gap:var(--sp-6)">
+        <li>Rà soát tính đầy đủ và khả năng sử dụng của bằng chứng</li>
+        <li>Làm rõ các khác biệt về định nghĩa và phạm vi dữ liệu</li>
+        <li>Xác định các khoảng trống trọng yếu</li>
+        <li>Dùng tài liệu làm cơ sở cho phỏng vấn, khảo sát hiện trường và chấm điểm</li>
+        <li>Không tự động xem việc "có tài liệu" là bằng chứng hệ thống vận hành hiệu quả</li>
+        <li>Ghi nhận rõ các giả định, hạn chế và nội dung cần TCIT xác nhận</li>
+        <li>Phản hồi thắc mắc trong nhóm Teams của từng phòng ban</li>
+        <li>Hỗ trợ tổ chức cấu trúc thư mục nếu TCIT cần</li>
+      </ul>
+    </div>
+
+    <div class="note note--tcit">
+      <div class="note__title">Kết quả sau khi hoàn thành đợt 1A</div>
+      <p style="margin-bottom:0">
+        Danh mục tài liệu hiện có · danh sách đầu mối chức năng · tình trạng từng yêu cầu ·
+        điểm sẵn sàng ban đầu · danh sách khoảng trống thông tin · các vấn đề cần phỏng vấn
+        hoặc xác nhận tại hiện trường.
+      </p>
+    </div>
+
+    <p class="tiny" style="margin-top:var(--sp-5)">
+      Kết quả khảo sát và danh mục tài liệu là công cụ hỗ trợ đánh giá. Kết luận cuối cùng
+      chỉ được đưa ra sau khi kết hợp rà soát tài liệu, phỏng vấn, kiểm tra dữ liệu
+      và khảo sát thực tế.
+    </p>
+  </section>
+
+</div>
+</main>
+</div>
+
+<script>
+/* ==========================================================================
+   DỮ LIỆU CÂY THƯ MỤC - sửa ở đây để đổi cấu trúc thư mục
+   --------------------------------------------------------------------------
+   MA_DOT_1A = danh sách 30 mã thuộc đợt 1A (lấy từ tab 03_DOT_1A của file
+   Excel). Mã nào có trong danh sách này thì được tô nổi bật trong cây.
+   Sang đợt 1B chỉ cần thay danh sách này, không phải sửa gì khác.
+
+   Hiện tại ba nhóm A, D, F trọn nhóm đều thuộc đợt 1A (10 + 8 + 12 = 30).
+   Các đợt sau sẽ lấy một phần trong nhóm, khi đó chỉ những mã được liệt kê
+   mới sáng lên - phần còn lại của nhóm vẫn mờ.
+   ========================================================================== */
+const MA_DOT_1A = [
+  "A01","A02","A03","A04","A05","A06","A07","A08","A09","A10",
+  "D01","D02","D03","D04","D05","D06","D07","D08",
+  "F01","F02","F03","F04","F05","F06","F07","F08","F09","F10","F11","F12",
+];
+
+const NHOM = [
+  {slug:"A1-10_CHIEN-LUOC-RUI-RO-QUAN-TRI", ten:"Chiến lược, rủi ro, quản trị",
+   prefix:"A", tu:1, den:10},
+  {slug:"B1-16_MOI-TRUONG", ten:"Môi trường",
+   prefix:"B", tu:1, den:16},
+  {slug:"C1-11_XA-HOI-AN-TOAN", ten:"Xã hội, an toàn",
+   prefix:"C", tu:1, den:11},
+  {slug:"D1-8_QUAN-TRI-TUAN-THU", ten:"Quản trị, tuân thủ",
+   prefix:"D", tu:1, den:8},
+  {slug:"E1-8_BAO-CAO-THI-TRUONG", ten:"Báo cáo, thị trường",
+   prefix:"E", tu:1, den:8},
+  {slug:"F1-12_QUAN-TRI-DOANH-NGHIEP", ten:"Quản trị doanh nghiệp",
+   prefix:"F", tu:1, den:12},
+  {slug:"G1-20_VAN-HANH-TAI-SAN", ten:"Vận hành, tài sản",
+   prefix:"G", tu:1, den:20},
+  {slug:"H1-8_NHAN-SU-HSEQ", ten:"Nhân sự, HSEQ",
+   prefix:"H", tu:1, den:8},
+  {slug:"I1-7_MUA-SAM-DU-LIEU", ten:"Mua sắm, dữ liệu",
+   prefix:"I", tu:1, den:7},
+];
+
+/* Đếm số mã của mỗi nhóm có trong đợt 1A */
+const SET_1A = new Set(MA_DOT_1A);
+NHOM.forEach(n => {
+  n.ma = [];
+  for(let i = n.tu; i <= n.den; i++){
+    const ma = n.prefix + String(i).padStart(2,'0');
+    n.ma.push({ma, in1a: SET_1A.has(ma)});
+  }
+  n.so1a  = n.ma.filter(m => m.in1a).length;
+  n.dot1a = n.so1a > 0;
+  n.tron  = n.so1a === n.ma.length;   /* trọn nhóm hay chỉ một phần */
+});
+
+/* ---- Dựng cây ---- */
+(function buildTree(){
+  const root = document.getElementById('treeRoot');
+  if(!root) return;
+
+  NHOM.forEach((n, idx) => {
+    const cuoi = idx === NHOM.length - 1;
+    const li = document.createElement('li');
+
+    const node = document.createElement('span');
+    node.className = 'tree__node' + (n.dot1a ? ' is-1a' : '');
+    node.setAttribute('role','button');
+    node.setAttribute('tabindex','0');
+    node.setAttribute('aria-expanded','false');
+
+    const caret = document.createElement('span');
+    caret.className = 'tree__caret';
+    caret.textContent = '▶';
+
+    const nhanh = document.createElement('span');
+    nhanh.style.color = 'var(--on-navy-5)';
+    nhanh.textContent = cuoi ? '└──' : '├──';
+
+    const ten = document.createElement('span');
+    ten.className = 'tree__name';
+    ten.textContent = n.slug + '/';
+
+    const tag = document.createElement('span');
+    tag.className = 'tree__tag' + (n.dot1a ? '' : ' tree__tag--off');
+    /* Nhóm lấy trọn thì ghi "cả nhóm", lấy một phần thì ghi rõ mấy trên mấy */
+    tag.textContent = !n.dot1a ? 'đợt sau'
+                    : (n.tron ? 'ĐỢT 1A · cả nhóm'
+                              : 'ĐỢT 1A · ' + n.so1a + '/' + n.ma.length + ' mã');
+
+    node.append(nhanh, caret, ten, tag);
+
+    const con = document.createElement('div');
+    con.className = 'tree__children';
+
+    n.ma.forEach((m, i) => {
+      const cuoiCon = (i === n.ma.length - 1);
+      const d = document.createElement('div');
+      d.className = 'tree__leaf' + (m.in1a ? ' is-1a' : '');
+      const nhanhCon = '<span class="c">' + (cuoiCon ? '└──' : '├──') + '</span> ';
+      d.innerHTML = m.in1a
+        ? nhanhCon + '<span class="tree__ma-1a">' + m.ma + '/</span>'
+                   + '<span class="tree__dot-1a">đợt 1A</span>'
+        : nhanhCon + '<span class="tree__ma-off">' + m.ma + '/</span>';
+      con.appendChild(d);
+    });
+
+    const ghi = document.createElement('div');
+    ghi.className = 'tree__leaf';
+    ghi.style.cssText = 'color:var(--on-navy-4);font-style:italic;padding-top:8px';
+    ghi.textContent = '     ' + n.ma.length + ' thư mục'
+      + (n.dot1a ? ' · ' + n.so1a + ' mã cần nộp trong đợt 1A' : ' · chưa tới lượt')
+      + ' – mỗi mã một thư mục, file đặt tên bắt đầu bằng mã';
+    con.appendChild(ghi);
+
+    function toggle(){
+      const mo = con.classList.toggle('is-open');
+      node.classList.toggle('is-open', mo);
+      node.setAttribute('aria-expanded', mo ? 'true' : 'false');
+    }
+    node.addEventListener('click', toggle);
+    node.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+    });
+
+    li.append(node, con);
+    root.appendChild(li);
+  });
+})();
+
+/* ---- Ẩn/hiện mục lục ----
+   Nhớ lựa chọn bằng localStorage để lần mở sau giữ nguyên.
+   Phím tắt: [ hoặc ] ---- */
+(function navToggle(){
+  const layout = document.querySelector('.layout');
+  const btn    = document.getElementById('navToggle');
+  if(!layout || !btn) return;
+  const txt = btn.querySelector('.nav__toggle-txt');
+  const KEY = 'tcit-nav-collapsed';
+
+  function apply(gap){
+    layout.classList.toggle('is-collapsed', gap);
+    btn.setAttribute('aria-expanded', gap ? 'false' : 'true');
+    btn.title = (gap ? 'Hiện mục lục' : 'Ẩn mục lục') + ' (phím [)';
+    btn.setAttribute('aria-label', gap ? 'Hiện mục lục' : 'Ẩn mục lục');
+    if(txt) txt.textContent = 'Ẩn mục lục';
+  }
+
+  let luu = null;
+  try{ luu = localStorage.getItem(KEY); }catch(e){}
+  apply(luu === '1');
+
+  btn.addEventListener('click', () => {
+    const gap = !layout.classList.contains('is-collapsed');
+    apply(gap);
+    try{ localStorage.setItem(KEY, gap ? '1' : '0'); }catch(e){}
+  });
+
+  document.addEventListener('keydown', e => {
+    if(e.key !== '[' && e.key !== ']') return;
+    if(e.ctrlKey || e.altKey || e.metaKey) return;
+    const t = e.target;
+    if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    e.preventDefault();
+    btn.click();
+  });
+})();
+
+/* ---- Khối gập (mục 3.4 thang điểm nhắc lại) ---- */
+(function folds(){
+  document.querySelectorAll('[data-fold]').forEach(btn => {
+    const body = btn.nextElementSibling;
+    btn.addEventListener('click', () => {
+      const mo = body.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', mo ? 'true' : 'false');
+    });
+  });
+})();
+
+/* ---- Đánh dấu mục đang xem trên thanh điều hướng ----
+   Theo dõi cả mục lớn lẫn mục con. Mục con đang xem thì mục lớn chứa nó
+   cũng sáng theo, để luôn biết mình đang ở phần nào. ---- */
+(function navHighlight(){
+  const links = [...document.querySelectorAll('.nav__link')];
+  const map = new Map();
+  links.forEach(a => {
+    const el = document.querySelector(a.getAttribute('href'));
+    if(el) map.set(el, a);
+  });
+  if(!map.size) return;
+
+  /* mục con id "s2-1" thuộc mục lớn id "s2" */
+  function chaCua(id){
+    const m = id.match(/^(s\d+)-\d+$/);
+    return m ? document.querySelector('.nav__link[href="#' + m[1] + '"]') : null;
+  }
+
+  let dangXem = null;
+  const obs = new IntersectionObserver(entries => {
+    const hien = entries.filter(e => e.isIntersecting)
+                        .sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    if(!hien.length) return;
+    const el = hien[0].target;
+    if(el === dangXem) return;
+    dangXem = el;
+
+    links.forEach(a => a.classList.remove('is-active'));
+    const a = map.get(el);
+    if(a){
+      a.classList.add('is-active');
+      const cha = chaCua(el.id);
+      if(cha) cha.classList.add('is-active');
+    }
+  }, {rootMargin:'-15% 0px -75% 0px', threshold:0});
+
+  map.forEach((_, el) => obs.observe(el));
+})();
+</script>
+</body>
+</html>
