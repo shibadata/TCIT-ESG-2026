@@ -17,10 +17,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  # Tách build và deploy thành 2 job. Nếu gộp chung 1 job, khi "Re-run all jobs"
+  # thì bước upload chạy lại và run sẽ có 2 artifact tên "github-pages"
+  # (một cho mỗi attempt) -> deploy-pages lỗi "Multiple artifacts named
+  # github-pages were unexpectedly found". Tách ra thì chỉ cần re-run job deploy.
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,5 +29,13 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v4
