@@ -862,14 +862,47 @@ ul.plain li{margin-bottom:var(--sp-2)}
         <div class="note__title">Cột ghi chú rất quan trọng</div>
         <p>
           Nếu có bằng chứng hoặc thông tin liên quan, <b>phải ghi lại</b> vào cột
-          <span class="mono-tag">H</span>. Ví dụ  trả lời "Một phần" không kèm ghi chú
-          thì A&amp;C sẽ không biết có gì và thiếu gì và cần hỏi lại.
+          <span class="mono-tag">H</span>. Trả lời "Một phần" mà không kèm ghi chú
+          thì A&amp;C không biết có gì và thiếu gì, lại phải quay lại hỏi.
         </p>
-        <p style="margin-bottom:0">Ghi càng cụ thể càng tốt:</p>
+        <p>
+          Ghi theo dạng <b>chỉ đúng tới bằng chứng</b>: tài liệu nào, nằm ở đâu, ai giữ,
+          số liệu tới kỳ nào, còn thiếu phần nào. Ví dụ câu
+          <span class="mono-tag mono-tag--y">B01</span> – "Có dữ liệu điện tiêu thụ theo tháng
+          và theo khu vực/thiết bị chính không?":
+        </p>
+        <div class="tbl-wrap" style="margin-bottom:var(--sp-3)">
+          <table>
+            <thead><tr>
+              <th style="width:55%">Ghi thế này</th><th>Vì sao dùng được</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td class="tiny" style="color:var(--sc5)">
+                  "Hóa đơn điện EVN theo tháng, bản mềm ở SharePoint Phòng Kỹ thuật,
+                  đầu mối [chức danh] giữ, đủ từ 01/2024 tới 06/2026. Chưa tách được điện
+                  cho reefer và điện văn phòng vì đang chung một đồng hồ tổng."
+                </td>
+                <td class="tiny">Nêu rõ tài liệu, nơi lưu, người giữ, kỳ số liệu và
+                  đúng phần đang thiếu – A&amp;C lấy được ngay, không phải hỏi lại.</td>
+              </tr>
+              <tr>
+                <td class="tiny" style="color:var(--sc1)">"Có theo dõi nhưng chưa đầy đủ"</td>
+                <td class="tiny">Không biết theo dõi bằng gì, ai giữ, thiếu chỗ nào –
+                  A&amp;C vẫn phải quay lại hỏi từ đầu.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-bottom:0">Năm thứ nên có trong một ghi chú:</p>
         <ul class="plain" style="margin-bottom:0">
-          <li>Tên tài liệu hoặc hệ thống đang lưu dữ liệu đó</li>
-          <li>Đầu mối đang giữ thông tin</li>
-          <li>Vấn đề cần làm rõ...</li>
+          <li><b>Tài liệu/hệ thống</b> – tên đúng của file, báo cáo hoặc phần mềm đang lưu
+            (vd: <i>Báo cáo HSEQ quý, phần mềm TOS, sổ theo dõi Excel của tổ vận hành</i>)</li>
+          <li><b>Nơi lưu</b> – thư mục, SharePoint, tủ hồ sơ, module nào trên hệ thống</li>
+          <li><b>Ai giữ</b> – tên hoặc chức danh đầu mối đang nắm thông tin đó</li>
+          <li><b>Kỳ số liệu</b> – có đủ từ tháng/năm nào tới tháng/năm nào</li>
+          <li><b>Phần còn thiếu</b> – thiếu kỳ nào, thiếu chỉ tiêu nào, hoặc vướng gì
+            khiến chưa lấy ra được</li>
         </ul>
       </div>
     </div>
@@ -918,6 +951,12 @@ ul.plain li{margin-bottom:var(--sp-2)}
         Cột <span class="mono-tag">G</span>. Thang này <b>dùng chung cho cả hai tab</b> –
         tab nộp tài liệu cũng chấm theo đúng năm mức này.
       </p>
+      <p>
+        Điểm không chỉ đo <b>tài liệu có tồn tại hay không</b>, mà đo cả bốn thứ:
+        <b>mức đầy đủ</b> · <b>tính cập nhật</b> · <b>khả năng truy xuất</b> ·
+        <b>có người chịu trách nhiệm hay không</b>. Nhìn ví dụ của từng mức bên dưới
+        sẽ thấy rõ bốn thứ đó tăng dần thế nào.
+      </p>
 
       <div class="scores">
         <div class="score score--1">
@@ -961,20 +1000,6 @@ ul.plain li{margin-bottom:var(--sp-2)}
         </div>
       </div>
 
-      <div class="note note--key">
-        <div class="note__title">Không chọn điểm cao chỉ vì tài liệu tồn tại</div>
-        <p>
-          Điểm phản ánh cả bốn thứ: <b>mức đầy đủ</b>, <b>tính cập nhật</b>,
-          <b>khả năng truy xuất</b>, và <b>có người chịu trách nhiệm hay không</b>.
-        </p>
-        <p style="margin-bottom:0">Bốn câu tự hỏi trước khi chấm:</p>
-        <ul class="plain" style="margin-bottom:0">
-          <li>Tài liệu có <b>đầy đủ</b> không, hay chỉ có một phần?</li>
-          <li>Có <b>cập nhật</b> gần đây không, hay đã cũ?</li>
-          <li>Khi cần thì <b>tìm ra ngay</b> được không?</li>
-          <li>Có <b>người chịu trách nhiệm</b> giữ và cập nhật không?</li>
-        </ul>
-      </div>
     </div>
 
     <!-- 2.4 -->
