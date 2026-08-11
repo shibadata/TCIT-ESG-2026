@@ -8,7 +8,7 @@
 <!-- ==========================================================================
      BẢNG ĐIỀU KHIỂN STYLE - sửa ở đây là đổi toàn trang
      ==========================================================================
-     Màu lấy từ file request TCIT_Documentation_Readiness_Survey_v1.3_Dot1A.
+     Màu lấy từ file request TCIT_Documentation_Readiness_Survey_v1.4_Dot1AB.
      Quy ước màu: XANH BIỂN = việc của TCIT · XANH LÁ = việc của Baker Tilly A&C
      ========================================================================== -->
 <style>
@@ -59,12 +59,11 @@
   --paper-alt:#F7F9FC;
   --paper-sink:#F0F4F8;
 
-  /* ---- MÀU trạng thái (6 giá trị của cột Tình trạng) ---- */
+  /* ---- MÀU trạng thái (5 giá trị của cột Tình trạng) ---- */
   --st-chuagui-bg:#FDECEC;    --st-chuagui-fg:#9B2C2C;   --st-chuagui-bd:#F0B9B9;
   --st-dangcb-bg:#FCF3DC;     --st-dangcb-fg:#8A6100;    --st-dangcb-bd:#F0DCA8;
   --st-dacc-bg:#E3F5E8;       --st-dacc-fg:#1E6B37;      --st-dacc-bd:#B4E0C2;
   --st-khongco-bg:#EEF2F6;    --st-khongco-fg:#4A5563;   --st-khongco-bd:#D3DCE5;
-  --st-khongad-bg:#F2F0F7;    --st-khongad-fg:#5B4B8A;   --st-khongad-bd:#D6CFE8;
   --st-canlamro-bg:#EAF0F6;   --st-canlamro-fg:#1F4E79;  --st-canlamro-bd:#BCD2E5;
 
   /* ---- MÀU điểm 1-5 ---- */
@@ -344,7 +343,6 @@ td.num{text-align:center; font-family:var(--font-mono); font-weight:700}
 .pill--dangcb   {background:var(--st-dangcb-bg);   color:var(--st-dangcb-fg);   border-color:var(--st-dangcb-bd)}
 .pill--dacc     {background:var(--st-dacc-bg);     color:var(--st-dacc-fg);     border-color:var(--st-dacc-bd)}
 .pill--khongco  {background:var(--st-khongco-bg);  color:var(--st-khongco-fg);  border-color:var(--st-khongco-bd)}
-.pill--khongad  {background:var(--st-khongad-bg);  color:var(--st-khongad-fg);  border-color:var(--st-khongad-bd)}
 .pill--canlamro {background:var(--st-canlamro-bg); color:var(--st-canlamro-fg); border-color:var(--st-canlamro-bd)}
 
 /* ===== KHỐI GẬP (dùng cho phần lặp lại, vd thang điểm ở mục 3) ===== */
@@ -427,10 +425,16 @@ td.num{text-align:center; font-family:var(--font-mono); font-weight:700}
 .tree__node.is-open .tree__caret{transform:rotate(90deg)}
 .tree__name{color:var(--on-navy-1)}
 .tree__node.is-1a .tree__name{color:var(--turmeric-300); font-weight:700}
+.tree__node.is-1b .tree__name{color:var(--navy-300); font-weight:700}
 .tree__tag{
   font-size:var(--fs-micro); padding:2px 9px; border-radius:11px;
   background:rgba(240,190,77,.22); color:var(--turmeric-300);
   border:1px solid rgba(240,190,77,.50); letter-spacing:.3px;
+}
+/* Nhãn của đợt 1B - xanh nhạt, để phân biệt với vàng nghệ của đợt 1A */
+.tree__tag--1b{
+  background:rgba(193,228,245,.16); color:var(--navy-300);
+  border-color:rgba(193,228,245,.45);
 }
 .tree__tag--off{
   background:rgba(255,255,255,.09); color:var(--on-navy-4);
@@ -440,16 +444,27 @@ td.num{text-align:center; font-family:var(--font-mono); font-weight:700}
 .tree__children.is-open{display:block}
 .tree__leaf{color:var(--on-navy-3); padding:2px 8px}
 .tree__leaf .c{color:var(--on-navy-5)}
-/* Mã thuộc đợt đang làm - sáng lên, có nhãn nhỏ bên cạnh */
+/* Mã thuộc đợt đang làm - sáng lên, có nhãn nhỏ bên cạnh.
+   Đợt 1A vàng nghệ, đợt 1B xanh nhạt. */
 .tree__leaf.is-1a .c{color:var(--turmeric-300)}
+.tree__leaf.is-1b .c{color:var(--navy-300)}
 .tree__ma-1a{
   color:var(--turmeric-300); font-weight:700;
   background:rgba(240,190,77,.16); padding:2px 8px;
   border-radius:var(--radius-sm); border:1px solid rgba(240,190,77,.38);
 }
+.tree__ma-1b{
+  color:var(--navy-300); font-weight:700;
+  background:rgba(193,228,245,.13); padding:2px 8px;
+  border-radius:var(--radius-sm); border:1px solid rgba(193,228,245,.34);
+}
 .tree__dot-1a{
   font-family:var(--font-text); font-size:var(--fs-micro);
   color:var(--turmeric-300); margin-left:var(--sp-3); letter-spacing:.3px;
+}
+.tree__dot-1b{
+  font-family:var(--font-text); font-size:var(--fs-micro);
+  color:var(--navy-300); margin-left:var(--sp-3); letter-spacing:.3px;
 }
 /* Mã của đợt sau - mờ hơn nhưng vẫn đọc được */
 .tree__ma-off{color:var(--on-navy-4)}
@@ -621,7 +636,7 @@ ul.plain li{margin-bottom:var(--sp-2)}
 <nav class="nav">
   <div class="nav__brand">
     <div class="nav__brand-title">Khảo sát hiện trạng &amp;<br>yêu cầu tài liệu ESG</div>
-    <div class="nav__brand-sub">TCIT &times; BAKER TILLY A&amp;C · ĐỢT 1A</div>
+    <div class="nav__brand-sub">TCIT &times; BAKER TILLY A&amp;C · ĐỢT 1A &amp; 1B</div>
   </div>
   <button class="nav__toggle" id="navToggle" type="button"
           aria-expanded="true" aria-controls="navList"
@@ -638,10 +653,10 @@ ul.plain li{margin-bottom:var(--sp-2)}
     <li><a class="nav__link nav__link--sub" href="#s2-3"><span class="nav__num">2.3</span><span>Thang điểm 1–5</span></a></li>
     <li><a class="nav__link nav__link--sub" href="#s2-4"><span class="nav__num">2.4</span><span>Ví dụ một câu</span></a></li>
 
-    <li><a class="nav__link" href="#s3"><span class="nav__num">3</span><span>Yêu cầu tài liệu <span class="nav__tab">tab 03_DOT_1A</span></span></a></li>
+    <li><a class="nav__link" href="#s3"><span class="nav__num">3</span><span>Yêu cầu tài liệu <span class="nav__tab">tab 03_DOT_1A · 1B</span></span></a></li>
     <li><a class="nav__link nav__link--sub" href="#s3-1"><span class="nav__num">3.1</span><span>Thư mục lưu tài liệu</span></a></li>
     <li><a class="nav__link nav__link--sub" href="#s3-2"><span class="nav__num">3.2</span><span>Cách điền</span></a></li>
-    <li><a class="nav__link nav__link--sub" href="#s3-3"><span class="nav__num">3.3</span><span>Sáu tình trạng</span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s3-3"><span class="nav__num">3.3</span><span>Năm tình trạng</span></a></li>
     <li><a class="nav__link nav__link--sub" href="#s3-4"><span class="nav__num">3.4</span><span>Thang điểm 1–5</span></a></li>
     <li><a class="nav__link nav__link--sub" href="#s3-5"><span class="nav__num">3.5</span><span>Ví dụ một lượt nộp</span></a></li>
     <li><a class="nav__link nav__link--sub" href="#s3-6"><span class="nav__num">3.6</span><span>Tài liệu bảo mật</span></a></li>
@@ -662,11 +677,12 @@ ul.plain li{margin-bottom:var(--sp-2)}
     <div class="page-head__eyebrow">Hướng dẫn thực hiện</div>
     <h1>Khảo sát hiện trạng về mức độ sẵn sàng &amp; yêu cầu tài liệu</h1>
     <p class="page-head__lead">
-      TCIT cần làm <b>hai việc</b> trong đợt này: trả lời bộ khảo sát ở tab
-      <span class="mono-tag">02_Khao_sat_san_sang</span>, và nộp tài liệu ở tab
-      <span class="mono-tag">03_DOT_1A</span>. Tài liệu này hướng dẫn từng việc,
+      TCIT cần làm <b>hai việc</b>: trả lời bộ khảo sát ở tab
+      <span class="mono-tag">02_Khao_sat_san_sang</span>, và nộp tài liệu ở hai tab
+      <span class="mono-tag">03_DOT_1A</span> và
+      <span class="mono-tag">03_DOT_1B</span>. Tài liệu này hướng dẫn từng việc,
       mỗi việc một mục riêng.
-    </p>N · Hình thức
+    </p>
   </header>
 
   <!-- ═════════════════ 1. TỔNG QUAN ═════════════════ -->
@@ -704,9 +720,9 @@ ul.plain li{margin-bottom:var(--sp-2)}
       <div class="card card--tcit">
         <div class="card__title">Việc 2 · Nộp tài liệu</div>
         <ul>
-          <li>Tab <span class="mono-tag">03_DOT_1A</span> – 30 hạng mục</li>
+          <li>Tab <span class="mono-tag">03_DOT_1A</span> – 30 hạng mục, hạn <b>18/08/2026</b></li>
+          <li>Tab <span class="mono-tag">03_DOT_1B</span> – 36 hạng mục, hạn <b>24/08/2026</b></li>
           <li>Tìm file, bỏ vào thư mục, cập nhật tình trạng</li>
-          <li>Hạn nộp <b>18/08/2026</b></li>
           <li>Xem mục <a href="#s3">3</a></li>
         </ul>
       </div>
@@ -717,8 +733,8 @@ ul.plain li{margin-bottom:var(--sp-2)}
       nhìn ra ngay mình đang thiếu gì trước khi đi tìm file.
     </p>
 
-    <h3 class="sub">Bốn đợt nộp tài liệu</h3>
-    <p>Toàn bộ 100 hạng mục chia làm bốn đợt. Hiện đang ở <b>đợt 1A</b>.</p>
+    <h3 class="sub">Hai đợt đang thực hiện</h3>
+    <p>Hiện đã phát hành <b>đợt 1A</b> và <b>đợt 1B</b>, tổng cộng 66 hạng mục.</p>
     <div class="tbl-wrap">
       <table>
         <thead><tr>
@@ -729,20 +745,21 @@ ul.plain li{margin-bottom:var(--sp-2)}
           <tr style="background:var(--turmeric-100)">
             <td class="mono"><b>1A</b></td>
             <td><b>Quản trị, Chiến lược, Rủi ro, Tuân thủ</b><br>
-                <span class="tiny">Nhóm mã A · D · F – đang thực hiện</span></td>
+                <span class="tiny">Nhóm mã A · D · F</span></td>
             <td class="num">30</td><td class="mono"><b>18/08/2026</b></td>
           </tr>
-          <tr><td class="mono">1B</td><td>Vận hành, Kỹ thuật, Môi trường, HSEQ, An toàn</td>
-              <td class="num">40</td><td class="mono">24/08/2026</td></tr>
-          <tr><td class="mono">2</td><td>Nhân sự, Cộng đồng, Mua sắm, Khách hàng, Dữ liệu</td>
-              <td class="num">22</td><td class="mono">31/08/2026</td></tr>
-          <tr><td class="mono">3</td><td>Báo cáo, Mục tiêu, Assurance</td>
-              <td class="num">8</td><td class="mono">04/09/2026</td></tr>
+          <tr style="background:var(--navy-050)">
+            <td class="mono"><b>1B</b></td>
+            <td><b>Vận hành, Kỹ thuật, Môi trường, HSEQ, An toàn</b><br>
+                <span class="tiny">Nhóm mã B · G</span></td>
+            <td class="num">36</td><td class="mono"><b>24/08/2026</b></td>
+          </tr>
         </tbody>
       </table>
     </div>
     <p class="tiny">
-      Bộ khảo sát 76 câu ở tab 02 phát hành một lần cùng đợt 1A, không chia đợt.
+      Các nhóm mã còn lại thuộc những đợt sau, sẽ phát hành riêng – chưa cần làm gì lúc này.
+      Bộ khảo sát 76 câu ở tab 02 phát hành một lần, không chia đợt.
     </p>
 
     <h3 class="sub">Quy ước màu dùng trong tài liệu này</h3>
@@ -1006,14 +1023,25 @@ ul.plain li{margin-bottom:var(--sp-2)}
   <section class="sec" id="s3">
     <div class="sec__head">
       <span class="sec__num">3</span>
-      <h2 class="sec__title">Yêu cầu tài liệu đợt 1A</h2>
+      <h2 class="sec__title">Yêu cầu tài liệu đợt 1A &amp; 1B</h2>
     </div>
 
     <p class="sec__intro">
-      Tab <span class="mono-tag">03_DOT_1A</span> chứa đúng <b>30 hạng mục</b> của đợt 1A.
+      Tab <span class="mono-tag">03_DOT_1A</span> chứa <b>30 hạng mục</b>,
+      tab <span class="mono-tag">03_DOT_1B</span> chứa <b>36 hạng mục</b>.
       Việc cần làm: lọc phần của phòng ban mình, tìm file, bỏ vào thư mục trên OneDrive,
       rồi cập nhật tình trạng và ngày dự kiến nộp.
     </p>
+
+    <div class="note note--key">
+      <div class="note__title">Hai tab, cách làm y hệt nhau</div>
+      <p style="margin-bottom:0">
+        <b>Cấu trúc cột của hai tab giống hệt nhau</b>, chỉ khác danh sách hạng mục và hạn nộp.
+        Anh/chị mở tab của đợt mình rồi làm theo đúng hướng dẫn dưới đây – mọi thứ trong mục này
+        áp dụng cho cả <span class="mono-tag">03_DOT_1A</span> lẫn
+        <span class="mono-tag">03_DOT_1B</span>.
+      </p>
+    </div>
 
     <!-- 3.1 -->
     <div class="subsec" id="s3-1">
@@ -1038,18 +1066,22 @@ ul.plain li{margin-bottom:var(--sp-2)}
       <div class="tree" id="tree">
         <div class="tree__legend">
           <i><b style="background:var(--turmeric-300)"></b> Mã cần nộp trong đợt 1A</i>
+          <i><b style="background:var(--navy-300)"></b> Mã cần nộp trong đợt 1B</i>
           <i><b style="background:var(--on-navy-4)"></b> Mã của các đợt sau</i>
           <i style="margin-left:auto">Bấm vào tên nhóm để mở hoặc đóng</i>
         </div>
         <div class="tree__root">TCIT_ESG_2026/</div>
         <ul id="treeRoot"></ul>
         <div class="tree__hint">
-          Thư mục được tạo sẵn cho <b>cả 100 mã</b> của bốn đợt. Đợt 1A cần nộp
-          <b style="color:var(--turmeric-300)">30 mã</b> – nằm trọn trong ba nhóm
+          Thư mục được tạo sẵn cho <b>cả 100 mã</b>. Đợt 1A cần nộp
+          <b style="color:var(--turmeric-300)">30 mã</b> – trọn ba nhóm
           <b style="color:var(--turmeric-300)">A</b> (10 mã),
           <b style="color:var(--turmeric-300)">D</b> (8 mã) và
           <b style="color:var(--turmeric-300)">F</b> (12 mã).
-          Sáu nhóm còn lại thuộc các đợt sau, thư mục có sẵn nhưng chưa cần bỏ file vào.
+          Đợt 1B cần nộp <b style="color:var(--navy-300)">36 mã</b> – trọn hai nhóm
+          <b style="color:var(--navy-300)">B</b> (16 mã) và
+          <b style="color:var(--navy-300)">G</b> (20 mã).
+          Bốn nhóm còn lại thuộc các đợt sau, thư mục có sẵn nhưng chưa cần bỏ file vào.
         </div>
       </div>
 
@@ -1094,56 +1126,66 @@ ul.plain li{margin-bottom:var(--sp-2)}
         <span class="legend__i"><span class="legend__sw legend__sw--ro"></span>Có sẵn, không sửa</span>
       </div>
 
+      <p>
+        Tab có 18 cột, từ <b>A</b> đến <b>R</b>. Cột <b>A</b> đến <b>J</b> và cột
+        <b>P</b> đã có sẵn nội dung, anh/chị không cần gõ. TCIT điền
+        <b class="c-must">L</b>, <b class="c-must">M</b>, <b class="c-must">N</b>,
+        <b class="c-must">O</b>, thêm <b class="c-opt">K</b> và
+        <b class="c-opt">Q</b> khi cần.
+      </p>
+
       <div class="cols cols--all">
         <div class="cols__row cols__row--ro"><div class="cols__k">A · Mã</div><div class="cols__v"></div></div>
-        <div class="cols__row cols__row--ro"><div class="cols__k">B · Nội dung cần cung cấp</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">B · Nội dung tài liệu/dữ liệu cần cung cấp</div><div class="cols__v"></div></div>
         <div class="cols__row cols__row--ro"><div class="cols__k">C · Là gì?</div><div class="cols__v"></div></div>
         <div class="cols__row cols__row--ro"><div class="cols__k">D · Vì sao cần?</div><div class="cols__v"></div></div>
-        <div class="cols__row cols__row--ro"><div class="cols__k">E · Cách chuẩn bị</div><div class="cols__v"></div></div>
-        <div class="cols__row cols__row--ro"><div class="cols__k">F · Chuẩn mực</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">E · Cách chuẩn bị/cách cung cấp</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">F · Chuẩn mực liên quan</div><div class="cols__v"></div></div>
         <div class="cols__row cols__row--ro"><div class="cols__k">G · Kỳ dữ liệu</div><div class="cols__v"></div></div>
         <div class="cols__row cols__row--ro"><div class="cols__k">H · Ưu tiên</div><div class="cols__v"></div></div>
-        <div class="cols__row cols__row--ro"><div class="cols__k">I · Phòng ban chủ trì</div><div class="cols__v"></div></div>
-        <div class="cols__row cols__row--ro"><div class="cols__k">J · Team in charge</div><div class="cols__v"></div></div>
-        <div class="cols__row cols__row--ro"><div class="cols__k">K · Phối hợp</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">I · Team in charge (TCIT)</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">J · Người phụ trách</div><div class="cols__v"></div></div>
 
         <div class="cols__row">
-          <div class="cols__k cols__k--opt">L · Đề xuất điều chỉnh</div>
-          <div class="cols__v">Gõ tự do. Dùng khi đầu mối thấy hạng mục giao chưa đúng.
+          <div class="cols__k cols__k--opt">K · Đề xuất điều chỉnh đầu mối</div>
+          <div class="cols__v">Gõ tự do. Dùng khi đầu mối thấy hạng mục giao chưa đúng phòng ban mình.
             <span class="cols__note">Ghi xong anh/chị nhớ nhắn lên group chat để điều chỉnh.</span></div>
         </div>
         <div class="cols__row">
-          <div class="cols__k cols__k--must">M · Tình trạng</div>
-          <div class="cols__v"><b>Chọn một trong sáu giá trị.</b> Xem mục <a href="#s3-3">3.3</a>.</div>
+          <div class="cols__k cols__k--must">L · Tình trạng</div>
+          <div class="cols__v"><b>Chọn một trong năm giá trị.</b> Xem mục <a href="#s3-3">3.3</a>.</div>
         </div>
         <div class="cols__row">
-          <div class="cols__k cols__k--must">N · Hình thức cung cấp</div>
+          <div class="cols__k cols__k--must">M · Hình thức cung cấp</div>
           <div class="cols__v">Chọn từ danh sách: DOC/PDF · Excel/CSV · Ảnh/scan · Hệ thống/TOS/E-Port ·
             Biên bản/quyết định · Xem tại chỗ (bảo mật) · Khác.</div>
         </div>
-
-        <div class="cols__row cols__row--ro"><div class="cols__k">O · Người phụ trách</div><div class="cols__v"></div></div>
-
         <div class="cols__row">
-          <div class="cols__k cols__k--must">P · Ngày dự kiến nộp</div>
+          <div class="cols__k cols__k--must">N · Ngày dự kiến nộp</div>
           <div class="cols__v">Ngày dạng dd/mm/yyyy, <b>không muộn hơn 28/08/2026</b> – đây là ngày
-            chốt data room, không phải hạn nộp. Hạn nộp đợt 1A vẫn là <b>18/08/2026</b>.
+            chốt data room, không phải hạn nộp. Hạn nộp của từng đợt sớm hơn:
+            <span class="cols__note">Đợt 1A: <b>18/08/2026</b> · Đợt 1B: <b>24/08/2026</b> · Chốt data room cả hai đợt: <b>28/08/2026</b></span>
             <span class="cols__note">Chưa tìm được file vẫn nên điền ngày dự kiến – để A&amp;C biết khi nào quay lại.</span></div>
         </div>
         <div class="cols__row">
-          <div class="cols__k cols__k--must">Q · Điểm sẵn sàng 1–5</div>
+          <div class="cols__k cols__k--must">O · Điểm sẵn sàng 1–5</div>
           <div class="cols__v">Cùng thang điểm với tab khảo sát. Xem mục <a href="#s3-4">3.4</a>.</div>
         </div>
 
-        <div class="cols__row cols__row--ro"><div class="cols__k">R · Đường dẫn</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">P · Đường dẫn</div><div class="cols__v"></div></div>
 
         <div class="cols__row">
-          <div class="cols__k cols__k--opt">S · TCIT Ghi chú</div>
+          <div class="cols__k cols__k--opt">Q · TCIT Ghi chú</div>
           <div class="cols__v">Lưu ý gì thì ghi vào đây: hạn chế, khoảng trống, cách tiếp cận tài liệu bảo mật.</div>
         </div>
 
-        <div class="cols__row cols__row--ro"><div class="cols__k">T · A&amp;C Ghi chú</div><div class="cols__v"></div></div>
+        <div class="cols__row cols__row--ro"><div class="cols__k">R · A&amp;C Ghi chú</div><div class="cols__v"></div></div>
       </div>
+
+      <p class="tiny">
+        Cột <span class="mono-tag">P · Đường dẫn</span> là link tới thư mục chứa file của mã đó –
+        đầu mối dự án điền sẵn, anh/chị bấm vào là tới đúng chỗ để bỏ file.
+      </p>
 
       <div class="note note--key">
         <div class="note__title">Chưa tìm được file cũng đừng để trống</div>
@@ -1159,10 +1201,10 @@ ul.plain li{margin-bottom:var(--sp-2)}
     <div class="subsec" id="s3-3">
       <div class="subsec__head">
         <span class="subsec__num">3.3</span>
-        <h3 class="subsec__title">Sáu tình trạng tài liệu</h3>
+        <h3 class="subsec__title">Năm tình trạng tài liệu</h3>
       </div>
 
-      <p>Cột <span class="mono-tag">M · Tình trạng</span> có sáu giá trị.</p>
+      <p>Cột <span class="mono-tag">L · Tình trạng</span> có năm giá trị.</p>
 
       <div class="tbl-wrap">
         <table>
@@ -1194,12 +1236,6 @@ ul.plain li{margin-bottom:var(--sp-2)}
                   <span style="color:var(--ink-faint)">Câu trả lời hợp lệ, không phải điểm trừ</span></td>
             </tr>
             <tr>
-              <td><span class="pill pill--khongad">Không áp dụng</span></td>
-              <td>Yêu cầu không phù hợp với phạm vi hoạt động của TCIT</td>
-              <td class="tiny"><b>Loại khỏi thống kê</b><br>
-                  <span style="color:var(--ink-faint)">Không tính vào tỷ lệ hoàn thành</span></td>
-            </tr>
-            <tr>
               <td><span class="pill pill--canlamro">Cần làm rõ</span></td>
               <td>Chưa xác định được nguồn, phạm vi hoặc đơn vị phụ trách</td>
               <td class="tiny">Còn việc phải làm<br>
@@ -1210,14 +1246,10 @@ ul.plain li{margin-bottom:var(--sp-2)}
       </div>
 
       <div class="note note--key">
-        <div class="note__title">Phân biệt ba trường hợp dễ nhầm</div>
+        <div class="note__title">Phân biệt hai trường hợp dễ nhầm</div>
         <p>
           <b><span class="pill pill--khongco">Không có</span></b> – tài liệu này lẽ ra TCIT nên có,
           nhưng hiện chưa có. Đây là một phát hiện của dự án.
-        </p>
-        <p>
-          <b><span class="pill pill--khongad">Không áp dụng</span></b> – yêu cầu này không liên quan
-          tới hoạt động của TCIT, hỏi cũng không đúng chỗ.
         </p>
         <p style="margin-bottom:0">
           <b><span class="pill pill--canlamro">Cần làm rõ</span></b> – chưa biết tài liệu này thuộc về ai,
@@ -1237,7 +1269,7 @@ ul.plain li{margin-bottom:var(--sp-2)}
         </button>
         <div class="fold__body">
           <p>
-            Cột <span class="mono-tag">Q</span> dùng đúng thang điểm của tab khảo sát.
+            Cột <span class="mono-tag">O</span> dùng đúng thang điểm của tab khảo sát.
             Bản đầy đủ kèm ví dụ ở mục <a href="#s2-3">2.3</a>.
           </p>
           <div class="scores scores--plain">
@@ -1271,7 +1303,7 @@ ul.plain li{margin-bottom:var(--sp-2)}
       <p>
         Lấy một hạng mục thật đi hết từ đầu tới cuối:
         mã <span class="mono-tag mono-tag--y">F03</span> – Quy chế hoạt động của HĐQT và các ủy ban,
-        giao cho <b>Thư ký HĐQT / Quản trị công ty</b>.
+        giao cho <b>Phòng Hành chính Nhân sự</b>.
       </p>
 
       <h4 class="sub4">Bước 1 · Nhìn thấy gì trong file</h4>
@@ -1285,6 +1317,7 @@ ul.plain li{margin-bottom:var(--sp-2)}
                 <th class="mono">B · Nội dung cần cung cấp</th>
                 <th class="mono">C · Là gì?</th>
                 <th class="mono">H · Ưu tiên</th>
+                <th class="mono">I · Team in charge</th>
               </tr>
             </thead>
             <tbody>
@@ -1293,6 +1326,7 @@ ul.plain li{margin-bottom:var(--sp-2)}
                 <td class="ro">Quy chế hoạt động của HĐQT và các ủy ban/tiểu ban: kiểm toán, rủi ro, chiến lược/ESG, nhân sự–thù lao nếu có</td>
                 <td class="ro">Terms of reference, thành phần, thẩm quyền, lịch họp và chế độ báo cáo.</td>
                 <td class="ro mono">Cao</td>
+                <td class="ro">Phòng Hành chính Nhân sự</td>
               </tr>
             </tbody>
           </table>
@@ -1301,7 +1335,7 @@ ul.plain li{margin-bottom:var(--sp-2)}
 
       <h4 class="sub4">Bước 2 · Tìm file trong hồ sơ phòng ban</h4>
       <p>
-        Thư ký HĐQT tìm được <b>Quy chế hoạt động HĐQT ban hành năm 2025</b> ở dạng PDF,
+        Đầu mối phụ trách tìm được <b>Quy chế hoạt động HĐQT ban hành năm 2025</b> ở dạng PDF,
         và <b>Quy chế Ủy ban Kiểm toán</b> ở một file riêng. Hai file, cùng một mã.
       </p>
 
@@ -1330,19 +1364,19 @@ ul.plain li{margin-bottom:var(--sp-2)}
           <table class="xl__h">
             <thead>
               <tr>
-                <th class="mono">M · Tình trạng</th>
-                <th class="mono">N · Hình thức</th>
-                <th class="mono">O · Người phụ trách</th>
-                <th class="mono">P · Ngày dự kiến</th>
-                <th class="mono">Q · Điểm</th>
-                <th class="mono">R · Đường dẫn</th>
+                <th class="mono">K · Đề xuất điều chỉnh</th>
+                <th class="mono">L · Tình trạng</th>
+                <th class="mono">M · Hình thức</th>
+                <th class="mono">N · Ngày dự kiến</th>
+                <th class="mono">O · Điểm</th>
+                <th class="mono">P · Đường dẫn</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td class="empty">(để trống)</td>
                 <td class="fill"><span class="pill pill--dacc">Đã cung cấp</span></td>
                 <td class="fill">DOC/PDF</td>
-                <td class="ro">[Thư ký HĐQT]</td>
                 <td class="fill mono">12/08/2026</td>
                 <td class="fill num" style="color:var(--sc4)">4</td>
                 <td class="ro mono">F1-12_QUAN-TRI-<wbr>DOANH-NGHIEP/<wbr>F03/</td>
@@ -1372,10 +1406,10 @@ ul.plain li{margin-bottom:var(--sp-2)}
           <table class="xl__h">
             <thead>
               <tr>
-                <th class="mono">M · Tình trạng</th>
-                <th class="mono">N · Hình thức</th>
-                <th class="mono">Q · Điểm</th>
-                <th class="mono">S · TCIT Ghi chú</th>
+                <th class="mono">L · Tình trạng</th>
+                <th class="mono">M · Hình thức</th>
+                <th class="mono">O · Điểm</th>
+                <th class="mono">Q · TCIT Ghi chú</th>
               </tr>
             </thead>
             <tbody>
@@ -1430,9 +1464,9 @@ ul.plain li{margin-bottom:var(--sp-2)}
         <p style="margin-bottom:0">
           Nếu tài liệu có thật nhưng không gửi file được, chọn tình trạng
           <span class="pill pill--dacc">Đã cung cấp</span> kèm hình thức
-          <b>Xem tại chỗ (bảo mật)</b> ở cột N – chứ không chọn
+          <b>Xem tại chỗ (bảo mật)</b> ở cột M – chứ không chọn
           <span class="pill pill--khongco">Không có</span>.
-          Ghi cách tiếp cận vào cột <span class="mono-tag">S · TCIT Ghi chú</span>.
+          Ghi cách tiếp cận vào cột <span class="mono-tag">Q · TCIT Ghi chú</span>.
         </p>
       </div>
 
@@ -1475,7 +1509,7 @@ ul.plain li{margin-bottom:var(--sp-2)}
         </ul>
       </div>
       <div class="card card--tcit">
-        <div class="card__title">Về tài liệu (tab 03_DOT_1A)</div>
+        <div class="card__title">Về tài liệu (tab 03_DOT_1A / 03_DOT_1B)</div>
         <ul>
           <li>Không hiểu hạng mục đang yêu cầu tài liệu gì</li>
           <li>Không rõ tài liệu mình có, có đúng thứ được yêu cầu không</li>
@@ -1563,7 +1597,7 @@ ul.plain li{margin-bottom:var(--sp-2)}
     </div>
 
     <div class="note note--tcit">
-      <div class="note__title">Kết quả sau khi hoàn thành đợt 1A</div>
+      <div class="note__title">Kết quả sau khi hoàn thành đợt 1A &amp; 1B</div>
       <p style="margin-bottom:0">
         Danh mục tài liệu hiện có · danh sách đầu mối chức năng · tình trạng từng yêu cầu ·
         điểm sẵn sàng ban đầu · danh sách khoảng trống thông tin · các vấn đề cần phỏng vấn
@@ -1586,18 +1620,27 @@ ul.plain li{margin-bottom:var(--sp-2)}
 /* ==========================================================================
    DỮ LIỆU CÂY THƯ MỤC - sửa ở đây để đổi cấu trúc thư mục
    --------------------------------------------------------------------------
-   MA_DOT_1A = danh sách 30 mã thuộc đợt 1A (lấy từ tab 03_DOT_1A của file
-   Excel). Mã nào có trong danh sách này thì được tô nổi bật trong cây.
-   Sang đợt 1B chỉ cần thay danh sách này, không phải sửa gì khác.
+   MA_1A = 30 mã thuộc đợt 1A (lấy từ tab 03_DOT_1A của file Excel)
+   MA_1B = 36 mã thuộc đợt 1B (lấy từ tab 03_DOT_1B)
+   Mã nào có trong hai danh sách này thì được tô nổi bật trong cây:
+   đợt 1A vàng nghệ, đợt 1B xanh nhạt. Sang đợt sau chỉ cần thêm một
+   danh sách nữa theo đúng khuôn này.
 
-   Hiện tại ba nhóm A, D, F trọn nhóm đều thuộc đợt 1A (10 + 8 + 12 = 30).
-   Các đợt sau sẽ lấy một phần trong nhóm, khi đó chỉ những mã được liệt kê
-   mới sáng lên - phần còn lại của nhóm vẫn mờ.
+   Hiện tại năm nhóm đều lấy trọn: A, D, F thuộc đợt 1A (10 + 8 + 12 = 30);
+   B, G thuộc đợt 1B (16 + 20 = 36). Các đợt sau sẽ lấy một phần trong nhóm,
+   khi đó chỉ những mã được liệt kê mới sáng lên - phần còn lại của nhóm vẫn mờ.
    ========================================================================== */
-const MA_DOT_1A = [
+const MA_1A = [
   "A01","A02","A03","A04","A05","A06","A07","A08","A09","A10",
   "D01","D02","D03","D04","D05","D06","D07","D08",
   "F01","F02","F03","F04","F05","F06","F07","F08","F09","F10","F11","F12",
+];
+
+const MA_1B = [
+  "B01","B02","B03","B04","B05","B06","B07","B08",
+  "B09","B10","B11","B12","B13","B14","B15","B16",
+  "G01","G02","G03","G04","G05","G06","G07","G08","G09","G10",
+  "G11","G12","G13","G14","G15","G16","G17","G18","G19","G20",
 ];
 
 const NHOM = [
@@ -1621,17 +1664,21 @@ const NHOM = [
    prefix:"I", tu:1, den:7},
 ];
 
-/* Đếm số mã của mỗi nhóm có trong đợt 1A */
-const SET_1A = new Set(MA_DOT_1A);
+/* Gắn đợt cho từng mã rồi đếm số mã của mỗi nhóm theo đợt.
+   Một nhóm chỉ thuộc về một đợt, nên nhóm nào có mã 1A thì không có mã 1B. */
+const SET_1A = new Set(MA_1A);
+const SET_1B = new Set(MA_1B);
 NHOM.forEach(n => {
   n.ma = [];
   for(let i = n.tu; i <= n.den; i++){
     const ma = n.prefix + String(i).padStart(2,'0');
-    n.ma.push({ma, in1a: SET_1A.has(ma)});
+    n.ma.push({ma, dot: SET_1A.has(ma) ? '1A' : (SET_1B.has(ma) ? '1B' : null)});
   }
-  n.so1a  = n.ma.filter(m => m.in1a).length;
-  n.dot1a = n.so1a > 0;
-  n.tron  = n.so1a === n.ma.length;   /* trọn nhóm hay chỉ một phần */
+  n.so1a = n.ma.filter(m => m.dot === '1A').length;
+  n.so1b = n.ma.filter(m => m.dot === '1B').length;
+  n.dot  = n.so1a > 0 ? '1A' : (n.so1b > 0 ? '1B' : null);   /* đợt của cả nhóm */
+  n.so   = n.so1a + n.so1b;                                  /* số mã cần nộp */
+  n.tron = n.so === n.ma.length;                             /* trọn nhóm hay một phần */
 });
 
 /* ---- Dựng cây ---- */
@@ -1644,7 +1691,7 @@ NHOM.forEach(n => {
     const li = document.createElement('li');
 
     const node = document.createElement('span');
-    node.className = 'tree__node' + (n.dot1a ? ' is-1a' : '');
+    node.className = 'tree__node' + (n.dot ? ' is-' + n.dot.toLowerCase() : '');
     node.setAttribute('role','button');
     node.setAttribute('tabindex','0');
     node.setAttribute('aria-expanded','false');
@@ -1662,11 +1709,12 @@ NHOM.forEach(n => {
     ten.textContent = n.slug + '/';
 
     const tag = document.createElement('span');
-    tag.className = 'tree__tag' + (n.dot1a ? '' : ' tree__tag--off');
+    tag.className = 'tree__tag'
+      + (!n.dot ? ' tree__tag--off' : (n.dot === '1B' ? ' tree__tag--1b' : ''));
     /* Nhóm lấy trọn thì ghi "cả nhóm", lấy một phần thì ghi rõ mấy trên mấy */
-    tag.textContent = !n.dot1a ? 'đợt sau'
-                    : (n.tron ? 'ĐỢT 1A · cả nhóm'
-                              : 'ĐỢT 1A · ' + n.so1a + '/' + n.ma.length + ' mã');
+    tag.textContent = !n.dot ? 'đợt sau'
+                    : (n.tron ? 'ĐỢT ' + n.dot + ' · cả nhóm'
+                              : 'ĐỢT ' + n.dot + ' · ' + n.so + '/' + n.ma.length + ' mã');
 
     node.append(nhanh, caret, ten, tag);
 
@@ -1676,11 +1724,12 @@ NHOM.forEach(n => {
     n.ma.forEach((m, i) => {
       const cuoiCon = (i === n.ma.length - 1);
       const d = document.createElement('div');
-      d.className = 'tree__leaf' + (m.in1a ? ' is-1a' : '');
+      const hau = m.dot ? m.dot.toLowerCase() : null;   /* "1a" hoặc "1b" */
+      d.className = 'tree__leaf' + (hau ? ' is-' + hau : '');
       const nhanhCon = '<span class="c">' + (cuoiCon ? '└──' : '├──') + '</span> ';
-      d.innerHTML = m.in1a
-        ? nhanhCon + '<span class="tree__ma-1a">' + m.ma + '/</span>'
-                   + '<span class="tree__dot-1a">đợt 1A</span>'
+      d.innerHTML = hau
+        ? nhanhCon + '<span class="tree__ma-' + hau + '">' + m.ma + '/</span>'
+                   + '<span class="tree__dot-' + hau + '">đợt ' + m.dot + '</span>'
         : nhanhCon + '<span class="tree__ma-off">' + m.ma + '/</span>';
       con.appendChild(d);
     });
@@ -1689,7 +1738,7 @@ NHOM.forEach(n => {
     ghi.className = 'tree__leaf';
     ghi.style.cssText = 'color:var(--on-navy-4);font-style:italic;padding-top:8px';
     ghi.textContent = '     ' + n.ma.length + ' thư mục'
-      + (n.dot1a ? ' · ' + n.so1a + ' mã cần nộp trong đợt 1A' : ' · chưa tới lượt')
+      + (n.dot ? ' · ' + n.so + ' mã cần nộp trong đợt ' + n.dot : ' · chưa tới lượt')
       + ' – mỗi mã một thư mục, file đặt tên bắt đầu bằng mã';
     con.appendChild(ghi);
 
