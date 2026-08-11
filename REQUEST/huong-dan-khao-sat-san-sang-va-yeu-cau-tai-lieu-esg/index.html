@@ -651,7 +651,7 @@ ul.plain li{margin-bottom:var(--sp-2)}
     <li><a class="nav__link nav__link--sub" href="#s2-1"><span class="nav__num">2.1</span><span>Cách điền</span></a></li>
     <li><a class="nav__link nav__link--sub" href="#s2-2"><span class="nav__num">2.2</span><span>Bốn mức trả lời</span></a></li>
     <li><a class="nav__link nav__link--sub" href="#s2-3"><span class="nav__num">2.3</span><span>Thang điểm 1–5</span></a></li>
-    <li><a class="nav__link nav__link--sub" href="#s2-4"><span class="nav__num">2.4</span><span>Ví dụ một câu</span></a></li>
+    <li><a class="nav__link nav__link--sub" href="#s2-4"><span class="nav__num">2.4</span><span>Ví dụ vài câu</span></a></li>
 
     <li><a class="nav__link" href="#s3"><span class="nav__num">3</span><span>Yêu cầu tài liệu <span class="nav__tab">tab 03_DOT_1A · 1B</span></span></a></li>
     <li><a class="nav__link nav__link--sub" href="#s3-1"><span class="nav__num">3.1</span><span>Thư mục lưu tài liệu</span></a></li>
@@ -1006,29 +1006,70 @@ ul.plain li{margin-bottom:var(--sp-2)}
     <div class="subsec" id="s2-4">
       <div class="subsec__head">
         <span class="subsec__num">2.4</span>
-        <h3 class="subsec__title">Ví dụ một câu</h3>
+        <h3 class="subsec__title">Ví dụ vài câu</h3>
       </div>
 
-      <p>Câu <span class="mono-tag mono-tag--y">A01</span> – về đầu mối ESG, giao cho Ban Lãnh đạo / Đầu mối ESG nội bộ.</p>
+      <p>
+        Bốn câu thật trong tab 02, thuộc bốn đầu mối khác nhau, để thấy ghi chú viết
+        thế nào là đủ dùng. Bằng chứng có thể là <b>tên người hoặc chức danh đang giữ</b>,
+        <b>hệ thống đang lưu</b> (TOS, E-Port…) hoặc <b>tên file</b> cụ thể.
+      </p>
 
       <div class="xl">
-        <div class="xl__bar"><span>Tab <b>02_Khao_sat_san_sang</b> · dòng A01</span><span>Ô nền vàng là ô cần điền · ô xám đã có sẵn</span></div>
+        <div class="xl__bar"><span>Tab <b>02_Khao_sat_san_sang</b></span><span>Ô nền vàng là ô cần điền · ô xám đã có sẵn</span></div>
         <div class="xl__scroll">
           <table class="xl__h">
             <thead>
               <tr>
-                <th class="mono">C · Câu hỏi</th>
-                <th class="mono">F · Trả lời</th>
-                <th class="mono">G · Điểm</th>
-                <th class="mono">H · Ghi chú / bằng chứng</th>
+                <th class="mono" style="width:6%">A · Mã</th>
+                <th class="mono" style="width:15%">E · Đầu mối</th>
+                <th class="mono" style="width:24%">C · Câu hỏi</th>
+                <th class="mono" style="width:9%">F · Trả lời</th>
+                <th class="mono" style="width:6%">G · Điểm</th>
+                <th class="mono" style="width:40%">H · Ghi chú / bằng chứng</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td class="ro mono"><b>A01</b></td>
+                <td class="ro">Ban Lãnh đạo/<wbr>Đầu mối ESG nội bộ</td>
                 <td class="ro">TCIT đã có đầu mối/nhóm phụ trách ESG chính thức chưa?</td>
                 <td class="fill">Một phần</td>
                 <td class="fill num" style="color:var(--sc2)">2</td>
-                <td class="fill">Có nhóm làm việc từ 08/2026, chưa có quyết định chính thức. Đầu mối hiện là [chức danh].</td>
+                <td class="fill">Có nhóm làm việc từ 08/2026, chưa có quyết định chính thức.
+                  Đầu mối hiện là [chức danh], họp định kỳ 2 tuần/lần, biên bản lưu ở
+                  hộp thư nhóm chứ chưa có thư mục riêng.</td>
+              </tr>
+              <tr>
+                <td class="ro mono"><b>G02</b></td>
+                <td class="ro">HSE/<wbr>Nhân sự</td>
+                <td class="ro">Có dữ liệu LTIFR, TRIR, near-miss, unsafe act/condition, ngày công mất theo tháng không?</td>
+                <td class="fill">Một phần</td>
+                <td class="fill num" style="color:var(--sc3)">3</td>
+                <td class="fill">File <i>Bao_cao_HSEQ_thang.xlsx</i> do [chức danh] Phòng HSE giữ,
+                  có số vụ tai nạn và ngày công mất đủ từ 01/2024. LTIFR/TRIR tính tay từng quý,
+                  chưa có công thức thống nhất. Near-miss mới ghi sổ giấy tại hiện trường,
+                  chưa nhập vào file.</td>
+              </tr>
+              <tr>
+                <td class="ro mono"><b>O02</b></td>
+                <td class="ro">Vận hành cảng</td>
+                <td class="ro">Có báo cáo vận hành tháng/quý về sản lượng, năng suất cầu bến, năng suất cẩu, thời gian tàu/xe chờ, dwell time và sự cố không?</td>
+                <td class="fill">Có</td>
+                <td class="fill num" style="color:var(--sc5)">5</td>
+                <td class="fill">Số liệu xuất trực tiếp từ <b>TOS</b>, báo cáo vận hành tháng
+                  do Trung tâm Điều hành Sản xuất phát hành, có đủ sản lượng, năng suất cẩu,
+                  dwell time và sự cố. Đủ từ 2023 tới nay, đầu mối [chức danh].</td>
+              </tr>
+              <tr>
+                <td class="ro mono"><b>L03</b></td>
+                <td class="ro">CNTT</td>
+                <td class="ro">Có ghi nhận sự cố mất dữ liệu, rò rỉ dữ liệu hoặc downtime hệ thống không?</td>
+                <td class="fill">Chưa rõ</td>
+                <td class="fill num" style="color:var(--sc1)">1</td>
+                <td class="fill">Hệ thống <b>TOS</b> và <b>E-Port</b> có log sự cố, nhưng chưa
+                  xác định được ai đang tổng hợp thành báo cáo và lưu ở đâu. Cần hỏi lại
+                  đầu mối vận hành hệ thống rồi cập nhật sau.</td>
               </tr>
             </tbody>
           </table>
@@ -1036,11 +1077,26 @@ ul.plain li{margin-bottom:var(--sp-2)}
       </div>
 
       <div class="note note--tcit">
-        <div class="note__title">Vì sao trả lời "Một phần" và chấm 2 điểm</div>
-        <p style="margin-bottom:0">
-          Có nhóm làm việc nên không chọn "Không", nhưng chưa có quyết định chính thức nên chỉ mới được <b>Một phần</b>. Chấm 2 vì đang "có nhưng chưa được kiểm soát": chưa có văn bản, chưa rõ ai chịu trách nhiệm lâu dài.
-        </p>
+        <div class="note__title">Vì sao chấm như vậy</div>
+        <ul class="plain" style="margin-bottom:0">
+          <li><b>A01 · Một phần, 2 điểm</b> – có nhóm làm việc nên không chọn "Không",
+            nhưng chưa có quyết định chính thức nên chỉ mới là một phần. Chấm 2 vì
+            "có nhưng chưa được kiểm soát": chưa có văn bản, chưa rõ ai chịu trách nhiệm lâu dài.</li>
+          <li><b>G02 · Một phần, 3 điểm</b> – dữ liệu gốc có và truy ra được, nhưng phải
+            tính tay và còn thiếu hẳn một mảng (near-miss). Đúng mô tả mức 3:
+            "tổng hợp thủ công được nhưng còn thiếu hoặc chưa thống nhất".</li>
+          <li><b>O02 · Có, 5 điểm</b> – dữ liệu chạy ra từ hệ thống, báo cáo phát hành định kỳ,
+            có đầu mối rõ và có lịch sử nhiều năm. Đủ cả bốn tiêu chí nên mới lên 5.</li>
+          <li><b>L03 · Chưa rõ, 1 điểm</b> – biết là hệ thống có ghi log, nhưng chưa xác định
+            được người giữ và nơi lưu. Chọn "Chưa rõ" rồi ghi rõ đang vướng chỗ nào
+            là cách làm đúng, không cần đoán bừa.</li>
+        </ul>
       </div>
+
+      <p class="tiny">
+        Trả lời "Chưa rõ" như câu L03 hoàn toàn hợp lệ – nhắn thêm vào nhóm Teams để
+        A&amp;C cùng gỡ, đừng để ô trống.
+      </p>
     </div>
   </section>
 
