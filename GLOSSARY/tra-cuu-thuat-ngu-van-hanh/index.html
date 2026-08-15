@@ -705,9 +705,13 @@ fillSel(el('fcluster'), clusters.map(function(c){ return c.slug; }), function(sl
   var c = clusters.filter(function(x){ return x.slug===slug; })[0];
   return c ? c.name : slug;
 });
+/* Ten nhom trong du lieu goc viet hoa toan bo, doc nhuc mat -> ha ve Title Case.
+   Rieng may tu von la viet tat thi giu nguyen, khong de thanh "Esg" / "It" / "Hse". */
+var KEEP_UPPER = /\b(esg|it|hse)\b/gi;
 function titleCase(s){
   return String(s).toLowerCase().replace(/(^|[\s/&-])([a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ])/g,
-    function(m,sep,ch){ return sep + ch.toUpperCase(); });
+    function(m,sep,ch){ return sep + ch.toUpperCase(); })
+    .replace(KEEP_UPPER, function(w){ return w.toUpperCase(); });
 }
 fillSel(el('fcat'), uniq(terms.map(function(t){ return t.cat; })), titleCase);
 fillSel(el('fpri'), uniq(terms.map(function(t){ return t.pri; })));
@@ -730,7 +734,7 @@ if(strayVals.length){
   });
   el('faud').appendChild(audOptGroupStray);
 }
-fillSel(el('facat'), uniq(acrs.map(function(a){ return a.cat; })));
+fillSel(el('facat'), uniq(acrs.map(function(a){ return a.cat; })), titleCase);
 
 /* ================= cluster cards (tong quan) ================= */
 var clusterGrid = el('clusterGrid');
