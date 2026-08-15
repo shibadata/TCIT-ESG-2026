@@ -8,6 +8,7 @@
 :root{
   --bg:#f5f7f6; --panel:#fff; --line:#dfe6e3; --ink:#1c2a26; --muted:#5c6d67;
   --brand:#0e5e4e; --brand2:#0a4a3d; --blue:#1c5f8c; --amber:#8a5a10; --red:#a43d3d; --green:#1f7a4d;
+  --navy:#1b3a5c;
   --shadow:0 1px 3px rgba(20,40,35,.08), 0 1px 2px rgba(20,40,35,.06);
 }
 *{box-sizing:border-box}
@@ -191,6 +192,9 @@ main{flex:1;min-width:0;padding:26px 34px 60px;max-width:1180px}
 .tag.t-ext{background:#fdeecb;color:#8a5a10}
 .tag.t-pri1{background:#173f39;color:#fff}
 .tag.t-pri2{background:#eee;color:#555}
+/* Bo chon loc (50 cot loi / 30 doi ngoai) la tieu chi khac han muc uu tien,
+   truoc dung chung mot mau xanh la dam voi P1 nen nhin tuong cung mot loai. */
+.tag.t-set{background:var(--navy);color:#fff}
 .tag.t-warn{background:#fdeaea;color:#8f2f2f}
 .tag.t-review{background:#fff4e8;color:var(--amber)}
 .srcline{font-size:.78rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
@@ -848,8 +852,8 @@ function termHTML(t, idPrefix){
     h += '<button class="tag t-aud-stray" data-f="aud" data-v="'+esc(a)+'">'+esc(STRAY_LABEL[a]||a)+'</button>';
   });
   h += '<button class="tag '+(t.pri&&t.pri.indexOf('P1')>=0?'t-pri1':'t-pri2')+'" data-f="pri" data-v="'+esc(t.pri)+'">'+esc(t.pri)+'</button>';
-  if(top50[t.id]) h += '<button class="tag t-pri1" data-f="set" data-v="top50">Bộ 50 cốt lõi</button>';
-  if(top30[t.id]) h += '<button class="tag t-pri1" data-f="set" data-v="top30">Bộ 30 đối ngoại</button>';
+  if(top50[t.id]) h += '<button class="tag t-set" data-f="set" data-v="top50">Bộ 50 cốt lõi</button>';
+  if(top30[t.id]) h += '<button class="tag t-set" data-f="set" data-v="top30">Bộ 30 đối ngoại</button>';
   if(!t.rev_default) h += '<button class="tag t-review" data-f="warn" data-v="rev">Cần rà soát cụ thể</button>';
   if(findingByCode[t.id]) h += '<button class="tag t-warn" data-f="warn" data-v="warn" data-goto="'+esc(t.id)+'">Có phát hiện đối chiếu</button>';
   h += '</div>';
