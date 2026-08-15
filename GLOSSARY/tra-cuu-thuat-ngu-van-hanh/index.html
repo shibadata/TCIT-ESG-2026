@@ -118,6 +118,10 @@ main{flex:1;min-width:0;padding:26px 34px 60px;max-width:1180px}
 .srcard .gvi{color:var(--brand2);font-weight:650;margin-bottom:6px;font-size:.92rem}
 .srdesc{font-size:.9rem;color:#3f524d;margin:0 0 8px;
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+/* cap de nham von ngan, cat bot 3 dong la mat y - cho hien tron */
+.srdesc-full{display:block;-webkit-line-clamp:none;overflow:visible}
+.srcaut{font-size:.85rem;background:#fff4e8;border-radius:8px;padding:8px 11px;
+  color:#6b4a12;margin:0 0 9px}
 .srmeta{font-size:.78rem;color:var(--muted);margin-bottom:9px}
 .srgo{background:none;border:none;color:var(--blue);font-size:.83rem;cursor:pointer;
   padding:0;font-family:inherit;font-weight:650}
@@ -234,6 +238,10 @@ td{padding:9px 11px;border-bottom:1px solid #eef1ef;vertical-align:top}
 .wblock .wcode-link{cursor:pointer;transition:.12s}
 .wblock .wcode-link:hover{background:var(--brand);transform:translateY(-1px)}
 .gterm.flash{border-color:var(--brand);box-shadow:0 0 0 3px rgba(14,94,78,.18)}
+/* nhay sang muc vua duoc nhay toi tu ket qua tim kiem */
+.pair.flash{border-color:var(--brand);box-shadow:0 0 0 3px rgba(14,94,78,.18)}
+.wblock.flash{box-shadow:0 0 0 3px rgba(14,94,78,.18)}
+tr.flash>td{background:#e4f0ed}
 .wblock dl{display:grid;grid-template-columns:118px 1fr;gap:6px 12px;margin:0}
 .wblock dt{font-weight:750;color:#3b615a;font-size:.82rem}
 .wblock dd{margin:0;font-size:.9rem}
@@ -619,11 +627,24 @@ function navState(){
 terms.forEach(function(t){
   t._k = norm([t.id,t.acr,t.en,t.vi,t.plain,t.tech,t.ex,t.why,t.cat,t.rel,t.conf,(t.aud_list||[]).join(' ')].join(' '));
 });
-acrs.forEach(function(a){ a._k = norm([a.acr,a.en,a.vi,a.cat,a.plain].join(' ')); });
-confs.forEach(function(c){ c._k = norm([c.pair,c.dist,c.caut].join(' ')); });
+// _i: chi so goc, dung lam id de tu ket qua tim kiem nhay dung toi dong/the do.
+// Khong dung acr hay pair lam id vi acr co trung (OPS xuat hien hai lan).
+acrs.forEach(function(a,i){ a._k = norm([a.acr,a.en,a.vi,a.cat,a.plain].join(' ')); a._i = i; });
+confs.forEach(function(c,i){ c._k = norm([c.pair,c.dist,c.caut].join(' ')); c._i = i; });
 
 var termById = {};
 terms.forEach(function(t){ termById[t.id] = t; });
+
+/* Cuon toi mot phan tu va nhay sang trong giay lat. Danh sach o day dai (333
+   thuat ngu, 114 viet tat) nen chi cuon toi thoi thi mat van kho bat duoc dong
+   nao vua duoc nhay toi. Khong tim thay thi ve dau trang cho khoi hut. */
+function flashTo(id){
+  var node = id ? document.getElementById(id) : null;
+  if(!node){ window.scrollTo({top:0}); return; }
+  node.scrollIntoView({block:'center'});
+  node.classList.add('flash');
+  setTimeout(function(){ node.classList.remove('flash'); }, 1600);
+}
 
 /* mo dung the thuat ngu o tab Thuat ngu, xoa moi bo loc dang bat */
 function openTermCard(id){
@@ -631,12 +652,7 @@ function openTermCard(id){
   fcluster.value=''; fcat.value=''; faud.value=''; fpri.value=''; fset.value=''; fwarn.value='';
   renderTerms(); renderActiveFilters(); renderSearchSummary();
   showTab('thuat-ngu', true); setView('tra-cuu', true); navState();
-  var node = document.getElementById('term-'+id);
-  if(node){
-    node.scrollIntoView({block:'center'});
-    node.classList.add('flash');
-    setTimeout(function(){ node.classList.remove('flash'); }, 1600);
-  }
+  flashTo('term-'+id);
 }
 
 var findingByCode = {};
@@ -971,7 +987,7 @@ function renderAcrs(){
   });
   el('atbody').innerHTML = out.map(function(x){
     var warn = /context dependent/i.test(x.st);
-    return '<tr><td><b>'+esc(x.acr)+'</b></td><td>'+esc(x.en)+'</td><td>'+esc(x.vi)+
+    return '<tr id="acr-'+x._i+'"><td><b>'+esc(x.acr)+'</b></td><td>'+esc(x.en)+'</td><td>'+esc(x.vi)+
       '</td><td>'+esc(x.plain)+'</td><td>'+
       (warn ? '<span class="badge b-draft">Tùy ngữ cảnh</span>'
             : '<span class="badge b-rev">Chuẩn</span>')+'</td></tr>';
@@ -986,7 +1002,7 @@ function renderConfs(){
   var q = norm(gq.value.trim());
   var out = confs.filter(function(x){ return !q || x._k.indexOf(q) >= 0; });
   el('clist').innerHTML = out.map(function(x){
-    return '<div class="pair"><h4>'+esc(x.pair)+'</h4>'+
+    return '<div class="pair" id="conf-'+x._i+'"><h4>'+esc(x.pair)+'</h4>'+
       '<div class="dist">'+esc(x.dist)+'</div>'+
       (x.caut ? '<div class="caut"><b>Lưu ý:</b> '+esc(x.caut)+'</div>' : '')+
       '</div>';
@@ -1083,7 +1099,7 @@ function srAcrHTML(x){
   h += '<div class="gvi">'+esc(x.en)+'</div>';
   if(x.vi) h += '<p class="srdesc">'+esc(x.vi)+(x.plain? ' — '+esc(x.plain):'')+'</p>';
   h += '<div class="srmeta">'+esc(titleCase(x.cat||''))+'</div>';
-  h += '<button class="srgo" data-open-tab="viet-tat">Xem trong tab Viết tắt →</button>';
+  h += '<button class="srgo" data-open-tab="viet-tat" data-goto-id="acr-'+x._i+'">Xem trong tab Viết tắt →</button>';
   h += '</article>';
   return h;
 }
@@ -1091,8 +1107,11 @@ function srConfHTML(x){
   var h = '<article class="srcard">';
   h += '<div class="srtype t-conf">Cặp dễ nhầm</div>';
   h += '<h4>'+esc(x.pair)+'</h4>';
-  if(x.dist) h += '<p class="srdesc">'+esc(x.dist)+'</p>';
-  h += '<button class="srgo" data-open-tab="de-nham">Xem trong tab Dễ nhầm →</button>';
+  if(x.dist) h += '<p class="srdesc srdesc-full">'+esc(x.dist)+'</p>';
+  // hien luon phan Luu y: day la thong tin quan trong nhat cua mot cap de nham,
+  // giau di thi nguoi doc phai bam sang tab khac moi thay
+  if(x.caut) h += '<p class="srcaut"><b>Lưu ý:</b> '+esc(x.caut)+'</p>';
+  h += '<button class="srgo" data-open-tab="de-nham" data-goto-id="conf-'+x._i+'">Xem trong tab Dễ nhầm →</button>';
   h += '</article>';
   return h;
 }
@@ -1132,10 +1151,13 @@ function renderSearchResults(){
   });
   el('srList').querySelectorAll('[data-open-tab]').forEach(function(b){
     b.addEventListener('click', function(){
-      var keep = gq.value.trim();
       gq.value=''; srFilter='';
+      // bo ca bo loc nhom ben tab Viet tat, neu khong muc dich co the bi loc mat
+      if(b.dataset.openTab === 'viet-tat') facat.value = '';
       renderTerms(); renderAcrs(); renderConfs(); renderActiveFilters(); renderSearchSummary();
-      showTab(b.dataset.openTab, true); setView('tra-cuu'); navState();
+      showTab(b.dataset.openTab, true); setView('tra-cuu', true); navState();
+      // cuon thang toi dung muc vua bam, khong bat nguoi dung tim lai tu dau
+      flashTo(b.dataset.gotoId);
     });
   });
   el('srList').querySelectorAll('[data-open-warn]').forEach(function(b){
@@ -1145,8 +1167,7 @@ function renderSearchResults(){
       renderTerms(); renderAcrs(); renderConfs(); renderActiveFilters(); renderSearchSummary();
       setView('can-ra-soat', true); navState();
       wq.value = keep; wf.value=''; renderWarn();
-      var node = document.getElementById('warn-'+b.dataset.openWarn);
-      if(node) node.scrollIntoView({block:'center'}); else window.scrollTo({top:0});
+      flashTo('warn-'+b.dataset.openWarn);
     });
   });
 }
