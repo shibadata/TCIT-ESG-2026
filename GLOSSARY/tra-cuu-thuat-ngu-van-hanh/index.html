@@ -597,6 +597,20 @@ confs.forEach(function(c){ c._k = norm([c.pair,c.dist,c.caut].join(' ')); });
 var termById = {};
 terms.forEach(function(t){ termById[t.id] = t; });
 
+/* mo dung the thuat ngu o tab Thuat ngu, xoa moi bo loc dang bat */
+function openTermCard(id){
+  gq.value=''; srFilter='';
+  fcluster.value=''; fcat.value=''; faud.value=''; fpri.value=''; fset.value=''; fwarn.value='';
+  renderTerms(); renderActiveFilters(); renderSearchSummary();
+  showTab('thuat-ngu', true); setView('tra-cuu', true); pushState();
+  var node = document.getElementById('term-'+id);
+  if(node){
+    node.scrollIntoView({block:'center'});
+    node.classList.add('flash');
+    setTimeout(function(){ node.classList.remove('flash'); }, 1600);
+  }
+}
+
 var findingByCode = {};
 F.forEach(function(x){
   x._k = norm([x.code, x.name, x.issue, x.fix, x.level].join(' '));
@@ -1066,17 +1080,7 @@ function renderSearchResults(){
 
   el('srList').querySelectorAll('[data-open-term]').forEach(function(b){
     b.addEventListener('click', function(){
-      var id = b.dataset.openTerm;
-      gq.value=''; srFilter='';
-      fcluster.value=''; fcat.value=''; faud.value=''; fpri.value=''; fset.value=''; fwarn.value='';
-      renderTerms(); renderActiveFilters(); renderSearchSummary();
-      showTab('thuat-ngu', true); setView('tra-cuu', true); pushState();
-      var node = document.getElementById('term-'+id);
-      if(node){
-        node.scrollIntoView({block:'center'});
-        node.classList.add('flash');
-        setTimeout(function(){ node.classList.remove('flash'); }, 1600);
-      }
+      openTermCard(b.dataset.openTerm);
     });
   });
   el('srList').querySelectorAll('[data-open-tab]').forEach(function(b){
@@ -1181,17 +1185,7 @@ function renderWarn(){
   // bam ma thuat ngu trong canh bao -> mo dung the o tab Thuat ngu
   el('wlist').querySelectorAll('.wcode-link').forEach(function(b){
     b.addEventListener('click', function(){
-      var id = b.dataset.term;
-      gq.value = '';
-      fcluster.value=''; fcat.value=''; faud.value=''; fpri.value=''; fset.value=''; fwarn.value='';
-      renderTerms(); renderActiveFilters(); renderSearchSummary();
-      showTab('thuat-ngu', true); setView('tra-cuu', true); pushState();
-      var node = document.getElementById('term-'+id);
-      if(node){
-        node.scrollIntoView({block:'center'});
-        node.classList.add('flash');
-        setTimeout(function(){ node.classList.remove('flash'); }, 1600);
-      }
+      openTermCard(b.dataset.term);
     });
   });
 }
@@ -1201,10 +1195,14 @@ el('exlist').innerHTML = expertNotes.map(function(t){ return '<li>'+t+'</li>'; }
 /* ================= 32 muc can ra soat cu the ================= */
 var revExceptions = terms.filter(function(t){ return !t.rev_default; });
 el('revexBody').innerHTML = '<div class="gl-list">' + revExceptions.map(function(t){
-  return '<div class="wblock lv-hoi"><div class="whead"><span class="wcode">'+esc(t.id)+'</span>'+
+  return '<div class="wblock lv-hoi"><div class="whead">'+
+    '<button class="wcode wcode-link" data-term="'+esc(t.id)+'" title="Mở thẻ thuật ngữ này">'+esc(t.id)+' ↗</button>'+
     '<h4 class="wname">'+esc(t.en)+' — '+esc(t.vi)+'</h4></div>'+
     '<dl><dt>Trạng thái</dt><dd>'+esc(t.rev)+'</dd></dl></div>';
 }).join('') + '</div>';
+el('revexBody').querySelectorAll('.wcode-link').forEach(function(b){
+  b.addEventListener('click', function(){ openTermCard(b.dataset.term); });
+});
 el('revexToggle').addEventListener('click', function(){
   var body = el('revexBody');
   var open = body.classList.toggle('open');
