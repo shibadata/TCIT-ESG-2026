@@ -245,6 +245,15 @@ td{padding:9px 11px;border-bottom:1px solid #eef1ef;vertical-align:top}
 .revex-toggle{cursor:pointer;user-select:none}
 .revex-body{display:none;margin-top:10px}
 .revex-body.open{display:block}
+/* the thuat ngu mo ngay tai cho trong khoi 32 muc */
+.revex-open{text-decoration:none;display:inline-flex;align-items:center;gap:5px}
+.revex-open .caret{font-size:.66rem;opacity:.85}
+.revex-card[hidden]{display:none}
+.revex-card{margin-top:10px;padding-top:10px;border-top:1px dashed #cfdedb}
+.revex-card .gterm{margin:0}
+.revex-full{display:inline-block;margin-top:8px;font-size:.82rem;font-weight:700;
+  color:var(--brand);text-decoration:none}
+.revex-full:hover{text-decoration:underline}
 
 footer{color:var(--muted);font-size:.8rem;text-align:center;padding:28px 10px 8px}
 
@@ -568,23 +577,42 @@ function readState(){
 }
 var ST = readState();
 var stateTimer = null;
-function pushState(){
+var restoring = false;   // dang khoi phuc tu URL: khong ghi lai lich su
+
+function buildURL(){
+  var p = new URLSearchParams();
+  if(gq.value.trim()) p.set('q', gq.value.trim());
+  if(activeTab !== 'thuat-ngu') p.set('tab', activeTab);
+  if(fcluster.value) p.set('cluster', fcluster.value);
+  if(fcat.value) p.set('cat', fcat.value);
+  if(faud.value) p.set('aud', faud.value);
+  if(fpri.value) p.set('pri', fpri.value);
+  if(fset.value) p.set('set', fset.value);
+  if(fwarn.value) p.set('warn', fwarn.value);
+  if(facat.value) p.set('acat', facat.value);
+  if(activeView !== 'tong-quan') p.set('view', activeView);
+  var qs = p.toString();
+  return location.pathname + (qs ? '?' + qs : '');
+}
+
+/* Hai loai thay doi state, co chu y tach rieng:
+   - syncState: thay doi LIEN TUC (go phim, chinh dropdown). Dung replaceState va
+     hoan 250ms, neu khong moi ky tu go vao se de ra mot muc lich su, bam Back
+     chuc lan moi thoat duoc trang.
+   - navState: dieu huong ROI RAC (doi view/tab, mo the thuat ngu). Dung pushState
+     ngay lap tuc de nut Back lui dung mot buoc co nghia. */
+function syncState(){
+  if(restoring) return;
   clearTimeout(stateTimer);
   stateTimer = setTimeout(function(){
-    var p = new URLSearchParams();
-    if(gq.value.trim()) p.set('q', gq.value.trim());
-    if(activeTab !== 'thuat-ngu') p.set('tab', activeTab);
-    if(fcluster.value) p.set('cluster', fcluster.value);
-    if(fcat.value) p.set('cat', fcat.value);
-    if(faud.value) p.set('aud', faud.value);
-    if(fpri.value) p.set('pri', fpri.value);
-    if(fset.value) p.set('set', fset.value);
-    if(fwarn.value) p.set('warn', fwarn.value);
-    if(facat.value) p.set('acat', facat.value);
-    if(activeView !== 'tong-quan') p.set('view', activeView);
-    var qs = p.toString();
-    history.replaceState(null, '', qs ? ('?' + qs) : location.pathname);
+    history.replaceState(null, '', buildURL());
   }, 250);
+}
+function navState(){
+  if(restoring) return;
+  clearTimeout(stateTimer);       // nuot lan replace dang cho, push duoi day da gom du
+  var url = buildURL();
+  if(url !== location.pathname + location.search) history.pushState(null, '', url);
 }
 
 /* ================= index cho tim kiem ================= */
@@ -602,7 +630,7 @@ function openTermCard(id){
   gq.value=''; srFilter='';
   fcluster.value=''; fcat.value=''; faud.value=''; fpri.value=''; fset.value=''; fwarn.value='';
   renderTerms(); renderActiveFilters(); renderSearchSummary();
-  showTab('thuat-ngu', true); setView('tra-cuu', true); pushState();
+  showTab('thuat-ngu', true); setView('tra-cuu', true); navState();
   var node = document.getElementById('term-'+id);
   if(node){
     node.scrollIntoView({block:'center'});
@@ -629,7 +657,7 @@ function showTab(tab, skipPush){
     p.classList.toggle('active', p.id === 'panel-' + tab);
   });
   if(typeof applyView === 'function') applyView();
-  if(!skipPush) pushState();
+  if(!skipPush) navState();
 }
 document.querySelectorAll('.tabbtn').forEach(function(b){
   b.addEventListener('click', function(){ showTab(b.dataset.tab); });
@@ -655,7 +683,7 @@ document.querySelectorAll('#sideNav a[href^="#"]').forEach(function(a){
     }
     if(a.dataset.tab) showTab(a.dataset.tab, true);
     setView(target);
-    pushState();
+    navState();
   });
 });
 
@@ -709,6 +737,7 @@ var clusterGrid = el('clusterGrid');
 function gotoLookup(){
   showTab('thuat-ngu', true);
   setView('tra-cuu');
+  navState();
 }
 clusters.forEach(function(c){
   var n = terms.filter(function(t){ return t.cluster === c.slug; }).length;
@@ -770,8 +799,10 @@ function audShowLimit(){
   if(w <= 900) return 2;
   return 3;
 }
-function termHTML(t){
-  var h = '<article class="gterm" id="term-'+esc(t.id)+'">';
+function termHTML(t, idPrefix){
+  // idPrefix: doi tien to id khi render ban sao the o noi khac (the xem nhanh),
+  // neu de nguyen 'term-' se trung id voi the goc ben tab Tra cuu
+  var h = '<article class="gterm" id="'+(idPrefix||'term-')+esc(t.id)+'">';
   h += '<div class="gid">'+esc(t.id)+'</div>';
   h += '<h4>'+esc(t.en)+(t.acr?'<span class="gacr">'+esc(t.acr)+'</span>':'')+'</h4>';
   h += '<div class="gvi">'+esc(t.vi)+'</div>';
@@ -833,7 +864,7 @@ function applyFilter(vals){
   if('warn' in vals) fwarn.value = vals.warn;
   renderTerms();
   renderActiveFilters();
-  pushState();
+  syncState();
 }
 
 function renderActiveFilters(){
@@ -854,7 +885,7 @@ function renderActiveFilters(){
   box.querySelectorAll('button[data-clear]').forEach(function(btn){
     btn.addEventListener('click', function(){
       chips._fns[+btn.dataset.clear]();
-      renderTerms(); renderActiveFilters(); pushState();
+      renderTerms(); renderActiveFilters(); syncState();
     });
   });
   var clearBtn = el('freset');
@@ -876,11 +907,21 @@ function renderTerms(){
     if(q && t._k.indexOf(q) < 0) return false;
     return true;
   });
-  el('glist').innerHTML = out.map(termHTML).join('');
+  // khong truyen thang termHTML vao map: map con truyen ca chi so, se lot vao
+  // tham so idPrefix va lam hong id cua the tu phan tu thu hai tro di
+  el('glist').innerHTML = out.map(function(t){ return termHTML(t); }).join('');
   el('gempty').classList.toggle('hidden', out.length > 0);
   el('cnt').textContent = out.length + ' / ' + terms.length + ' thuật ngữ';
 
-  el('glist').querySelectorAll('.tag[data-more]').forEach(function(btn){
+  bindTermCard(el('glist'), false);
+}
+
+/* Gan hanh vi cho cac the thuat ngu nam trong `root`. Dung chung cho danh sach o
+   tab Thuat ngu va cho the xem nhanh mo tai cho trong khoi 32 muc.
+   goAfterFilter=true: bam mot tag de loc thi chuyen luon sang tab Tra cuu - the
+   xem nhanh nam ben Tong quan, khong chuyen thi loc xong nguoi dung khong thay gi. */
+function bindTermCard(root, goAfterFilter){
+  root.querySelectorAll('.tag[data-more]').forEach(function(btn){
     btn.addEventListener('click', function(){
       var rowEl = btn.parentNode;
       rowEl.querySelectorAll('.tag-hid').forEach(function(x){ x.classList.remove('hidden'); });
@@ -888,30 +929,32 @@ function renderTerms(){
     });
   });
 
-  el('glist').querySelectorAll('.tag[data-f]').forEach(function(btn){
+  root.querySelectorAll('.tag[data-f]').forEach(function(btn){
     btn.addEventListener('click', function(){
       // tag "Co phat hien doi chieu": khong loc danh sach, nhay thang toi canh bao cua chinh muc do
       if(btn.dataset.goto){
         wq.value = btn.dataset.goto; wf.value = '';
         renderWarn();
         setView('can-ra-soat');
+        navState();
         return;
       }
       var f = btn.dataset.f, v = btn.dataset.v;
       var vals = {cluster:'',cat:'',aud:'',pri:'',set:'',warn:''};
       vals[f] = v;
       applyFilter(vals);
+      if(goAfterFilter) gotoLookup();
     });
   });
 }
 [gq,fcluster,fcat,faud,fpri,fset,fwarn].forEach(function(n){
-  n.addEventListener('input', function(){ renderTerms(); renderActiveFilters(); pushState(); });
-  n.addEventListener('change', function(){ renderTerms(); renderActiveFilters(); pushState(); });
+  n.addEventListener('input', function(){ renderTerms(); renderActiveFilters(); syncState(); });
+  n.addEventListener('change', function(){ renderTerms(); renderActiveFilters(); syncState(); });
 });
 gqGo.addEventListener('click', function(){ renderTerms(); renderGlobalSearch(); });
 el('freset').addEventListener('click', function(){
   fcluster.value=''; fcat.value=''; faud.value=''; fpri.value=''; fset.value=''; fwarn.value='';
-  renderTerms(); renderActiveFilters(); pushState();
+  renderTerms(); renderActiveFilters(); syncState();
 });
 
 /* ================= acronym tab ================= */
@@ -932,7 +975,7 @@ function renderAcrs(){
   el('aempty').classList.toggle('hidden', out.length > 0);
   el('acnt').textContent = out.length + ' / ' + acrs.length + ' từ viết tắt';
 }
-facat.addEventListener('change', function(){ renderAcrs(); pushState(); });
+facat.addEventListener('change', function(){ renderAcrs(); syncState(); });
 
 /* ================= confusions tab ================= */
 function renderConfs(){
@@ -960,7 +1003,7 @@ gq.addEventListener('input', function(){
     renderActiveFilters();
   }
   srFilter = '';
-  renderGlobalSearch(); pushState();
+  renderGlobalSearch(); syncState();
 });
 
 /* ===== Che do ket qua: co chu trong o tim thi an het phan tinh, chi hien ket qua ===== */
@@ -1088,7 +1131,7 @@ function renderSearchResults(){
       var keep = gq.value.trim();
       gq.value=''; srFilter='';
       renderTerms(); renderAcrs(); renderConfs(); renderActiveFilters(); renderSearchSummary();
-      showTab(b.dataset.openTab, true); setView('tra-cuu'); pushState();
+      showTab(b.dataset.openTab, true); setView('tra-cuu'); navState();
     });
   });
   el('srList').querySelectorAll('[data-open-warn]').forEach(function(b){
@@ -1096,7 +1139,7 @@ function renderSearchResults(){
       var keep = gq.value.trim();
       gq.value=''; srFilter='';
       renderTerms(); renderAcrs(); renderConfs(); renderActiveFilters(); renderSearchSummary();
-      setView('can-ra-soat', true); pushState();
+      setView('can-ra-soat', true); navState();
       wq.value = keep; wf.value=''; renderWarn();
       var node = document.getElementById('warn-'+b.dataset.openWarn);
       if(node) node.scrollIntoView({block:'center'}); else window.scrollTo({top:0});
@@ -1168,7 +1211,7 @@ function renderWarn(){
     var h = '<article class="wblock lv-'+c+'" id="warn-'+x.no+'">';
     h += '<div class="whead"><span class="wno">'+x.no+'</span>';
     if(x.code && termById[x.code])
-      h += '<button class="wcode wcode-link" data-term="'+esc(x.code)+'" title="Mở thẻ thuật ngữ này">'+esc(x.code)+' ↗</button>';
+      h += '<a class="wcode wcode-link" href="#term-'+esc(x.code)+'" data-term="'+esc(x.code)+'" title="Mở thẻ thuật ngữ này">'+esc(x.code)+' ↗</a>';
     else if(x.code) h += '<span class="wcode">'+esc(x.code)+'</span>';
     h += '<h4 class="wname">'+x.name+'</h4>';
     h += '<span class="badge b-'+c+'">'+lvLabel(x.level)+'</span></div>';
@@ -1184,7 +1227,10 @@ function renderWarn(){
 
   // bam ma thuat ngu trong canh bao -> mo dung the o tab Thuat ngu
   el('wlist').querySelectorAll('.wcode-link').forEach(function(b){
-    b.addEventListener('click', function(){
+    b.addEventListener('click', function(e){
+      // Ctrl/Cmd/Shift+click de nguyen cho trinh duyet mo tab moi
+      if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
       openTermCard(b.dataset.term);
     });
   });
@@ -1194,14 +1240,42 @@ el('exlist').innerHTML = expertNotes.map(function(t){ return '<li>'+t+'</li>'; }
 
 /* ================= 32 muc can ra soat cu the ================= */
 var revExceptions = terms.filter(function(t){ return !t.rev_default; });
+/* Day la mot danh sach viec can ra soat, nguoi dung ra tung muc mot. Neu bam ma
+   thuat ngu ma nhay sang tab Tra cuu thi vong ra bi gay ngay tu muc dau, nen o
+   day mo the ngay tai cho. Van de href that de Ctrl+click / chuot giua mo tab
+   moi va chuot phai copy duoc link toi thuat ngu. */
 el('revexBody').innerHTML = '<div class="gl-list">' + revExceptions.map(function(t){
   return '<div class="wblock lv-hoi"><div class="whead">'+
-    '<button class="wcode wcode-link" data-term="'+esc(t.id)+'" title="Mở thẻ thuật ngữ này">'+esc(t.id)+' ↗</button>'+
+    '<a class="wcode wcode-link revex-open" href="#term-'+esc(t.id)+'" data-term="'+esc(t.id)+'" '+
+      'role="button" aria-expanded="false" title="Xem nhanh thẻ thuật ngữ">'+esc(t.id)+' <span class="caret">▾</span></a>'+
     '<h4 class="wname">'+esc(t.en)+' — '+esc(t.vi)+'</h4></div>'+
-    '<dl><dt>Trạng thái</dt><dd>'+esc(t.rev)+'</dd></dl></div>';
+    '<dl><dt>Trạng thái</dt><dd>'+esc(t.rev)+'</dd></dl>'+
+    '<div class="revex-card" hidden></div></div>';
 }).join('') + '</div>';
-el('revexBody').querySelectorAll('.wcode-link').forEach(function(b){
-  b.addEventListener('click', function(){ openTermCard(b.dataset.term); });
+
+el('revexBody').querySelectorAll('.revex-open').forEach(function(a){
+  a.addEventListener('click', function(e){
+    // Ctrl/Cmd/Shift+click de nguyen cho trinh duyet mo tab moi
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    var card = a.closest('.wblock').querySelector('.revex-card');
+    var open = card.hasAttribute('hidden');
+    if(open && !card.dataset.filled){
+      var t = termById[a.dataset.term];
+      card.innerHTML = termHTML(t, 'revex-term-') +
+        '<a class="revex-full" href="#term-'+esc(t.id)+'" data-term="'+esc(t.id)+'">Mở trong Tra cứu ↗</a>';
+      card.dataset.filled = '1';
+      bindTermCard(card, true);
+      card.querySelector('.revex-full').addEventListener('click', function(ev){
+        if(ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+        ev.preventDefault();
+        openTermCard(t.id);
+      });
+    }
+    card.toggleAttribute('hidden', !open);
+    a.setAttribute('aria-expanded', open ? 'true' : 'false');
+    a.querySelector('.caret').textContent = open ? '▴' : '▾';
+  });
 });
 el('revexToggle').addEventListener('click', function(){
   var body = el('revexBody');
@@ -1314,25 +1388,39 @@ window.addEventListener('resize', function(){
   }, 180);
 });
 
-/* ================= khoi tao tu URL state ================= */
-gq.value = ST.gq;
-fcluster.value = ST.cluster;
-fcat.value = ST.cat;
-faud.value = ST.aud;
-fpri.value = ST.pri;
-fset.value = ST.set;
-fwarn.value = ST.warn;
-facat.value = ST.acat;
-showTab(ST.tab, true);
+/* ================= khoi tao / khoi phuc tu URL state =================
+   Dung chung cho lan tai trang dau tien va cho nut Back, de trang thai sau khi
+   lui giong het nhu mo thang bang URL do. Ca ham chay trong co restoring=true
+   nen khong ghi them muc lich su nao. */
+function applyState(st){
+  restoring = true;
+  gq.value = st.gq;
+  fcluster.value = st.cluster;
+  fcat.value = st.cat;
+  faud.value = st.aud;
+  fpri.value = st.pri;
+  fset.value = st.set;
+  fwarn.value = st.warn;
+  facat.value = st.acat;
+  srFilter = '';
+  showTab(st.tab, true);
 
-renderTerms();
-renderAcrs();
-renderConfs();
-renderActiveFilters();
-renderWarn();
-setView(ST.view, true);
-renderSearchResults();
-renderSearchSummary();
+  renderTerms();
+  renderAcrs();
+  renderConfs();
+  renderActiveFilters();
+  renderWarn();
+  setView(st.view, true);
+  renderSearchResults();
+  renderSearchSummary();
+  restoring = false;
+}
+window.addEventListener('popstate', function(){
+  ST = readState();
+  applyState(ST);
+});
+
+applyState(ST);
 openHash();
 })();
 </script>
